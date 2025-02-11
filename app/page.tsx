@@ -1,6 +1,8 @@
 "use client"
 import { cn } from "@/src/lib/utils"
+import Navbar from "@/src/components/navbar"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
+
 
 
 export default function Home() {
@@ -22,7 +24,7 @@ export default function Home() {
       <GridPattern width={50} height={50} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("absolute inset-0 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]")} />
       {/* En-tête */}
       <header>
-        {/* <Navbar /> */}
+        <Navbar />
       </header>
 
       {/* Contenu principal */}
