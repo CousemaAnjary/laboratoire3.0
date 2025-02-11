@@ -4,7 +4,6 @@ import Navbar from "@/src/components/navbar"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
 
 
-
 export default function Home() {
   /**
    * ! STATE (état, données) de l'application

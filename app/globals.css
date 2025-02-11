@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+/* Police Inter - Regular */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Regular.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Font Space Grotesk - Regular (400) */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/spaceGrotesk/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Font Space Grotesk - Medium (500) */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/spaceGrotesk/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @layer base {
