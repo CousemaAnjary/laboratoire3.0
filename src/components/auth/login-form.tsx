@@ -57,7 +57,7 @@ export default function LoginForm() {
                                     <FormItem>
                                         <FormLabel className="font-inter">Adresse email</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />
+                                            <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />  
                                         </FormControl>
                                         <FormMessage className="font-inter" />
                                     </FormItem>
