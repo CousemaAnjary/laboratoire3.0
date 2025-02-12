@@ -44,7 +44,7 @@ export default function RegisterForm() {
             <div className="relative w-full max-w-md p-8">
                 <h1 className="mb-2 font-spaceGrotesk text-2xl font-medium">Inscription</h1>
                 <p className="mb-4 font-spaceGrotesk text-sm font-medium text-muted-foreground">
-                    Vous avez déjà un compte ? Accédez-y en cliquant <Link href="/auth/login" className="text-cyan-700 underline">ici</Link>
+                    Vous avez déjà un compte ? Accédez-y en cliquant <Link href="/login" className="text-cyan-700 underline">ici</Link>
                 </p>
 
                 <Form {...form}>
