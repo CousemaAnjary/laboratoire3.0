@@ -32,8 +32,16 @@ export default function RegisterForm() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleRegister = async (data: z.infer<typeof RegisterSchema>) => {
-        console.log(data)
-        setLoading(true)
+        try {
+            setLoading(true)
+            console.log(data)
+
+        } catch (error) {
+            console.error(error)
+            
+        } finally {
+            setLoading(false)
+        }
     }
 
     /**
