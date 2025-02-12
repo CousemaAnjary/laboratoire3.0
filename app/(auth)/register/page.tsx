@@ -1,5 +1,6 @@
 import { cn } from "@/src/lib/utils"
 import Navbar from "@/src/components/navbar"
+import RegisterForm from "@/src/components/auth/register-form"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
 
 
@@ -31,7 +32,7 @@ export default function Register() {
                     {/* Section 1 */}
                     <section className="flex min-h-[84vh] items-center justify-center">
                         {/*  container du formulaire de connexion */}
-                        {/* <RegisterForm /> */}
+                        <RegisterForm />
                     </section>
                 </main>
 
