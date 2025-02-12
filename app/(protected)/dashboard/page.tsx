@@ -20,6 +20,7 @@ export default function Dashboard() {
     return (
         <>
             <h1>Dashboard</h1>
+            <p>ID de session: {session?.user?.id}</p>
             <p>Welcome {session?.user?.name}</p>
             <Button onClick={() => signOut()}>Sign Out</Button>
         </>
