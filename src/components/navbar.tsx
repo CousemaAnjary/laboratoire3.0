@@ -5,6 +5,7 @@ import { Contact, House, Info, LayoutTemplate, LogIn, User } from 'lucide-react'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, } from "./ui/select"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
+
 export default function Navbar() {
     /**
      * ! STATE (état, données) de l'application
