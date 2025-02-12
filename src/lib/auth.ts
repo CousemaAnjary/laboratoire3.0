@@ -11,9 +11,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     callbacks: {
         async session({ session, token }) {
             if (token.sub) {
-                session.user.id = token.sub; // ✅ Ajoute l'ID utilisateur dans la session
+                session.user.id = token.sub // ✅ Ajoute l'ID utilisateur dans la session
             }
-            return session;
+            return session
+        },
+
+        async jwt({ token, user }) {
+            if (user) token.sub = user.id // ✅ Stocke l'ID utilisateur dans le token
+            return token;
         },
     },
     pages: {
