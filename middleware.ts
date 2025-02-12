@@ -17,12 +17,12 @@ export default async function middleware(req: NextRequest) {
 
     // 🔹 Redirection : Si l'utilisateur **n'est pas connecté** et essaie d'accéder à une **page protégée**
     if (!isLogged && isProtectedRoute) {
-        return NextResponse.redirect(new URL("/login", req.url))
+        return NextResponse.redirect(new URL("/login", nextUrl))
     }
 
     // 🔹 Redirection : Si l'utilisateur **est connecté** et tente d'accéder à une **page publique**
     if (isLogged && isPublicRoute) {
-        return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url))
+        return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
 
     return NextResponse.next()
