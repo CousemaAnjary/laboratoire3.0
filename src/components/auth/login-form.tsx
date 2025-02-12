@@ -1,16 +1,16 @@
 "use client"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-import { LoginSchema } from "@/src/lib/schemas/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
+import { z } from "zod"
 import Link from "next/link"
 import { useState } from "react"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
-import { z } from "zod"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
+import { LoginSchema } from "@/src/lib/schemas/auth"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 
 
 export default function LoginForm() {
