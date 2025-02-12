@@ -3,6 +3,7 @@ import { z } from "zod"
 import Link from "next/link"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
 import { Input } from "@/src/components/ui/input"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
@@ -15,6 +16,7 @@ export default function RegisterForm() {
     /**
      * ! STATE (état, données) de l'application
      */
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -50,6 +52,7 @@ export default function RegisterForm() {
             }
 
             alert(result.message)
+            router.push("/login")
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)
