@@ -5,11 +5,12 @@ import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
+import { FaGithub } from "react-icons/fa"
+import { FcGoogle } from "react-icons/fc"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { LoginSchema } from "@/src/lib/schemas/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-
 
 
 export default function LoginForm() {
@@ -58,8 +59,8 @@ export default function LoginForm() {
                                     <FormItem>
                                         <FormLabel className="font-inter">Adresse email</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />  
-                                            
+                                            <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />
+
                                         </FormControl>
                                         <FormMessage className="font-inter" />
                                     </FormItem>
@@ -109,18 +110,18 @@ export default function LoginForm() {
                             </div>
                         </div>
 
-                        {/* <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                             <div className="grid gap-2">
-                                <Button type="button" variant="outline" className="w-full font-inter" onClick={() => handleProviderLogin("google")}>
+                                <Button type="button" variant="outline" className="w-full font-inter" >
                                     <FcGoogle size={18} /> Google
                                 </Button>
                             </div>
                             <div className="grid gap-2">
-                                <Button type="button" variant="outline" className="w-full font-inter" onClick={() => handleProviderLogin("github")}>
+                                <Button type="button" variant="outline" className="w-full font-inter">
                                     <FaGithub size={18} /> Github
                                 </Button>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </form>
             </Form>
