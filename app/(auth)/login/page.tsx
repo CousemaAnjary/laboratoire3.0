@@ -1,7 +1,7 @@
 import { cn } from "@/src/lib/utils"
 import Navbar from "@/src/components/navbar"
+import LoginForm from "@/src/components/auth/login-form"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
-
 
 
 export default function Login() {
