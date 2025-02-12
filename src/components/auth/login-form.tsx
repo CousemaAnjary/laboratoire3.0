@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 
 
+
 export default function LoginForm() {
     /**
      * ! STATE (état, données) de l'application
@@ -58,6 +59,7 @@ export default function LoginForm() {
                                         <FormLabel className="font-inter">Adresse email</FormLabel>
                                         <FormControl>
                                             <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />  
+                                            
                                         </FormControl>
                                         <FormMessage className="font-inter" />
                                     </FormItem>
