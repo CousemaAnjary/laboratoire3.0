@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
@@ -11,6 +12,7 @@ import { LoginSchema } from "@/src/lib/schemas/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+
 
 
 export default function LoginForm() {
@@ -32,8 +34,11 @@ export default function LoginForm() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleLogin = async (data: z.infer<typeof LoginSchema>) => {
-        console.log(data)
-        setLoading(true)
+        try {
+            signIn("credentials", data)
+        } catch (error) {
+            console.error("Erreur lors de la connexion:", error)
+        }
     }
     /**
      * ! AFFICHAGE (render) de l'application
@@ -61,7 +66,7 @@ export default function LoginForm() {
                                         <FormControl>
                                             {/* Conteneur pour l'input et l'icône */}
                                             <div className="relative ">
-                                                <Input  type="email" {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
+                                                <Input type="email" {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
                                                 {/* Icône */}
                                                 <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/95 peer-disabled:opacity-50">
                                                     <AtSign size={16} strokeWidth={2} aria-hidden="true" />
@@ -91,7 +96,7 @@ export default function LoginForm() {
                                                         <LockKeyhole size={16} strokeWidth={2} aria-hidden="true" />
                                                     </div>
                                                 </div>
-                                               
+
                                             </FormControl>
                                             <FormMessage className="font-inter" />
                                         </FormItem>
