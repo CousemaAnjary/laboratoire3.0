@@ -1,0 +1,45 @@
+import bcrypt from 'bcryptjs';
+import { LoginSchema } from "./schemas/auth"
+import { getUserByEmail } from "@/data/user"
+import type { NextAuthConfig } from "next-auth"
+import GitHub from "next-auth/providers/github"
+import Credentials from "next-auth/providers/credentials"
+
+
+
+export default {
+    providers: [
+        GitHub,
+        Credentials({
+            credentials: { email: {}, password: {} },
+            authorize: async (credentials) => {
+
+                // Validation des données reçues via votre schéma(par exemple avec Zod)
+                const validated = LoginSchema.safeParse(credentials)
+
+                // Retourner une erreur si les données ne sont pas valides
+                if (!validated.success) {
+                    throw new Error("Données invalides")
+                }
+
+                // Vérifier si l'utilisateur existe dans la base de données
+                const user = await getUserByEmail(validated.data.email)
+
+                if (!user) {
+                    throw new Error("Aucun utilisateur trouvé avec cet e-mail.")
+                }
+
+                // Vérifier le mot de passe
+                const isPasswordValid = await bcrypt.compare(validated.data.password, user.password || "")
+
+                if (!isPasswordValid) {
+                    throw new Error("Mot de passe incorrect.")
+                }
+
+                // Retourner l'utilisateur pour créer une session
+                return user
+            },
+        })
+
+    ]
+} satisfies NextAuthConfig
