@@ -1,6 +1,7 @@
 "use client"
+import { Button } from "@/src/components/ui/button"
+import { signOut, useSession } from "next-auth/react"
 
-import { signIn, useSession } from "next-auth/react";
 
 export default function Dashboard() {
     /**
@@ -20,10 +21,7 @@ export default function Dashboard() {
         <>
             <h1>Dashboard</h1>
             <p>Welcome {session?.user?.name}</p>
-
-            <button onClick={() => signIn("github", { redirectTo: "/dashboard" })}>
-                Sign In
-            </button>
+            <Button onClick={() => signOut()}>Sign Out</Button>
         </>
     )
 }
