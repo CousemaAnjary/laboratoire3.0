@@ -11,6 +11,7 @@ export default {
     providers: [
         GitHub,
         Credentials({
+            credentials: { email: {}, password: {} },
             authorize: async (credentials) => {
 
                 // Validation des données reçues via votre schéma(par exemple avec Zod)
