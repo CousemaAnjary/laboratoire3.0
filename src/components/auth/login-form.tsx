@@ -34,10 +34,21 @@ export default function LoginForm() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleLogin = async (data: z.infer<typeof LoginSchema>) => {
+        // Affichage du loader pendant le chargement
+        setLoading(true)
+        
         try {
-            signIn("credentials", data)
+            signIn("credentials", {
+                email: data.email,
+                password: data.password,
+                redirectTo: "/dashboard",
+            })
+
         } catch (error) {
             console.error("Erreur lors de la connexion:", error)
+
+        } finally {
+            setLoading(false)
         }
     }
     /**
