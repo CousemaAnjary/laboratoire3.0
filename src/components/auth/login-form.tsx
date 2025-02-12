@@ -1,16 +1,16 @@
 "use client"
-import { z } from "zod"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { LoginSchema } from "@/src/lib/schemas/auth"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
-import { Eye, EyeOff, Loader } from "lucide-react"
-import { LoginSchema } from "@/src/lib/schemas/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { z } from "zod"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 
 
 export default function LoginForm() {
@@ -59,8 +59,14 @@ export default function LoginForm() {
                                     <FormItem>
                                         <FormLabel className="font-inter">Adresse email</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder="exemple@gmail.com" className=" bg-white font-inter shadow-sm dark:bg-zinc-950" />
-
+                                            {/* Conteneur pour l'input et l'icône */}
+                                            <div className="relative ">
+                                                <Input  {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
+                                                {/* Icône */}
+                                                <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/95 peer-disabled:opacity-50">
+                                                    <AtSign size={16} strokeWidth={2} aria-hidden="true" />
+                                                </div>
+                                            </div>
                                         </FormControl>
                                         <FormMessage className="font-inter" />
                                     </FormItem>
@@ -77,7 +83,16 @@ export default function LoginForm() {
                                         <FormItem>
                                             <FormLabel className="font-inter">Mot de passe</FormLabel>
                                             <FormControl>
-                                                <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre mot de passe" className="bg-white font-inter shadow-sm dark:bg-zinc-950" />
+                                                {/* Conteneur pour l'input et l'icône */}
+                                                <div className="relative ">
+                                                    {/* <Input  {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" /> */}
+                                                    <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre mot de passe" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
+                                                    {/* Icône */}
+                                                    <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/95 peer-disabled:opacity-50">
+                                                        <LockKeyhole size={16} strokeWidth={2} aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                               
                                             </FormControl>
                                             <FormMessage className="font-inter" />
                                         </FormItem>
