@@ -32,11 +32,27 @@ export default function RegisterForm() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleRegister = async (data: z.infer<typeof RegisterSchema>) => {
+        // Affichage du loader pendant le chargement
+        setLoading(true)
+
         try {
-            console.log(data)
+            const response = await fetch("/api/register", {
+                method: "POST",
+                body: JSON.stringify(data),
+            })
+
+            // Resultat de la requête (succès ou erreur)
+            const result = await response.json()
+
+            if (!response.ok) {
+                alert(result.error)
+                return
+            }
+
+            alert(result.message)
 
         } catch (error) {
-            console.error(error)
+            console.error("Erreur lors de l'inscription :", error)
 
         } finally {
             setLoading(false)
