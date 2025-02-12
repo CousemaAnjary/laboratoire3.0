@@ -97,7 +97,7 @@ export default function Navbar() {
                     <DropdownMenuSeparator />
 
                     {/* Login Section */}
-                    <Link href="/auth/login">
+                    <Link href="/login">
                         <DropdownMenuItem className="font-spaceGrotesk font-medium">
                             <div className="flex items-center space-x-2">
                                 <LogIn className="size-4" />
