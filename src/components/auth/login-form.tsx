@@ -57,11 +57,11 @@ export default function LoginForm() {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="font-inter">Adresse email</FormLabel>
+                                        <FormLabel className="font-inter">Adresse email </FormLabel>
                                         <FormControl>
                                             {/* Conteneur pour l'input et l'icône */}
                                             <div className="relative ">
-                                                <Input  {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
+                                                <Input  type="email" {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
                                                 {/* Icône */}
                                                 <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/95 peer-disabled:opacity-50">
                                                     <AtSign size={16} strokeWidth={2} aria-hidden="true" />
@@ -85,7 +85,6 @@ export default function LoginForm() {
                                             <FormControl>
                                                 {/* Conteneur pour l'input et l'icône */}
                                                 <div className="relative ">
-                                                    {/* <Input  {...field} placeholder="exemple@gmail.com" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" /> */}
                                                     <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre mot de passe" className="bg-white ps-10 font-inter shadow-sm dark:bg-zinc-950" />
                                                     {/* Icône */}
                                                     <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/95 peer-disabled:opacity-50">
