@@ -18,7 +18,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         async jwt({ token, user }) {
             if (user) token.sub = user.id // ✅ Stocke l'ID utilisateur dans le token
-            return token;
+            return token
         },
     },
     pages: {
