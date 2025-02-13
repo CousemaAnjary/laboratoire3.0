@@ -53,7 +53,8 @@ export default function RegisterForm() {
                 return
             }
 
-            alert(result.message)
+            //  Enregistrement du message de succès dans le stockage local
+            localStorage.setItem("success", result.message)
             router.push("/login")
 
         } catch (error) {
