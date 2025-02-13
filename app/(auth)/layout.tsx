@@ -1,6 +1,8 @@
+import { Toaster } from "sonner"
 import { cn } from "@/src/lib/utils"
 import Navbar from "@/src/components/navbar"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
+
 
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     return (
         <div className="flex min-h-screen flex-col ">
             <GridPattern width={50} height={50} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("absolute inset-0 [mask-image:radial-gradient(900px_circle_at_center,white,transparent)]")} />
-            {/* <Toaster richColors /> */}
+            <Toaster richColors />
             {/* En-tête */}
             <header>
                 <Navbar />
