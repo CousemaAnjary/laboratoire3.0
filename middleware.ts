@@ -29,6 +29,4 @@ export default async function middleware(req: NextRequest) {
 }
 
 // ✅ Middleware appliqué uniquement aux routes spécifiques
-export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-}
+export const matcher = ["/((?!api|_next/static|_next/image|favicon.ico).*)"]
