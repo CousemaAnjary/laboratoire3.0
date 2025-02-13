@@ -6,13 +6,12 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import { FaGithub } from "react-icons/fa"
-import { FcGoogle } from "react-icons/fc"
 import { LoginSchema } from "@/src/lib/schemas/auth"
 import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import Social from "./social"
 
 
 export default function LoginForm() {
@@ -47,22 +46,6 @@ export default function LoginForm() {
             console.error("Erreur lors de la connexion :", error)
 
         } finally {
-            setLoading(false)
-        }
-    }
-
-    const handleProviderLogin = async (provider: string) => {
-        // Affichage du loader pendant le chargement
-        setLoading(true)
-        try {
-            // Connexion avec le fournisseur
-            await signIn(provider, { redirectTo: DEFAULT_LOGIN_REDIRECT })
-
-        } catch (error) {
-            console.error("Error logging in with provider", error)
-
-        } finally {
-            // Désactivation du loader
             setLoading(false)
         }
     }
@@ -154,19 +137,7 @@ export default function LoginForm() {
                                 <span className="bg-background px-2 font-inter text-muted-foreground">Ou continuer avec</span>
                             </div>
                         </div>
-
-                        <div className="grid grid-cols-2 gap-2">
-                            <div className="grid gap-2">
-                                <Button type="button" variant="outline" className="w-full font-inter" onClick={() => handleProviderLogin("google")}>
-                                    <FcGoogle size={18} /> Google
-                                </Button>
-                            </div>
-                            <div className="grid gap-2">
-                                <Button type="button" variant="outline" className="w-full font-inter" onClick={() => handleProviderLogin("github")}>
-                                    <FaGithub size={18} /> Github
-                                </Button>
-                            </div>
-                        </div>
+                        <Social />
                     </div>
                 </form>
             </Form>
