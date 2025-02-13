@@ -12,8 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import Social from "./social"
-import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 
 export default function LoginForm() {
@@ -43,13 +43,14 @@ export default function LoginForm() {
             const result = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                redirect: false
+                redirect: false,
             })
 
             if (result?.error) {
                 toast.error(result.error)
                 return
             }
+
             //  Enregistrement du message de succès dans le stockage local
             localStorage.setItem("success", "Vous êtes connecté avec succès")
             router.push(DEFAULT_LOGIN_REDIRECT)
