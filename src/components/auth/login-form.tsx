@@ -15,8 +15,6 @@ import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 
 
-
-
 export default function LoginForm() {
     /**
      * ! STATE (état, données) de l'application
@@ -38,7 +36,6 @@ export default function LoginForm() {
     const handleLogin = async (data: z.infer<typeof LoginSchema>) => {
         // Affichage du loader pendant le chargement
         setLoading(true)
-        
         try {
             signIn("credentials", {
                 email: data.email,
@@ -47,11 +44,8 @@ export default function LoginForm() {
             })
 
         } catch (error) {
-            console.error("Erreur lors de la connexion:", error)
-
-        } finally {
-            setLoading(false)
-        }
+            console.error("Erreur lors de la connexion :", error)
+        } 
     }
     /**
      * ! AFFICHAGE (render) de l'application
