@@ -3,7 +3,7 @@ import Navbar from "@/src/components/navbar"
 import { GridPattern } from "@/src/components/magicui/grid-pattern"
 
 
-export default function layout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
     /**
      * ! STATE (état, données) de l'application
      */
