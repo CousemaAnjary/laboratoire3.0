@@ -3,15 +3,17 @@ import { LoginSchema } from "./schemas/auth"
 import { getUserByEmail } from "@/data/user"
 import type { NextAuthConfig } from "next-auth"
 import GitHub from "next-auth/providers/github"
+import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
 
-
+// ✅ Configuration des fournisseurs d'authentification
 export default {
     providers: [
+        Google,
         GitHub,
         Credentials({
             credentials: { email: {}, password: {} },
-            
+
             authorize: async (credentials) => {
 
                 // Validation des données reçues via votre schéma(par exemple avec Zod)
