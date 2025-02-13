@@ -46,7 +46,7 @@ export default function LoginForm() {
             })
 
             if (result?.error) {
-                toast.error(result.error)
+                toast.error(result.error || "Erreur inconnue")
                 return
             }
             //  Enregistrement du message de succès dans le stockage local

@@ -21,14 +21,14 @@ export default {
 
                 // Retourner une erreur si les données ne sont pas valides
                 if (!validated.success) {
-                    throw new Error("Données invalides")
+                    throw new Error("Données invalides. Vérifiez votre saisie.")
                 }
 
                 // Vérifier si l'utilisateur existe dans la base de données
                 const user = await getUserByEmail(validated.data.email)
 
                 if (!user) {
-                    throw new Error("Aucun utilisateur trouvé avec cet e-mail.")
+                    throw new Error("Aucun compte trouvé avec cet e-mail.")
                 }
 
                 // Vérifier le mot de passe
