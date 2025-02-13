@@ -37,7 +37,7 @@ export default function LoginForm() {
         // Affichage du loader pendant le chargement
         setLoading(true)
         try {
-            signIn("credentials", {
+            await signIn("credentials", {
                 email: data.email,
                 password: data.password,
                 redirectTo: DEFAULT_LOGIN_REDIRECT,
@@ -45,7 +45,10 @@ export default function LoginForm() {
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
-        } 
+
+        } finally {
+            setLoading(false)
+        }
     }
     /**
      * ! AFFICHAGE (render) de l'application
