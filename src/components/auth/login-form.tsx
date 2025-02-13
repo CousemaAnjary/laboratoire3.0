@@ -9,9 +9,11 @@ import { useForm } from "react-hook-form"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
 import { LoginSchema } from "@/src/lib/schemas/auth"
+import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+
 
 
 
@@ -41,7 +43,7 @@ export default function LoginForm() {
             signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                redirectTo: "/dashboard",
+                redirectTo: DEFAULT_LOGIN_REDIRECT,
             })
 
         } catch (error) {

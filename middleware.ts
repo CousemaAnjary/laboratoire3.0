@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from "next/server"
 // ✅ Définition des routes protégées et publiques
 const protectedRoutes = ["/dashboard"]
 const publicRoutes = ["/login", "/signup", "/"]
-const DEFAULT_LOGIN_REDIRECT = "/dashboard"
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard"
 
 
 export default async function middleware(req: NextRequest) {
