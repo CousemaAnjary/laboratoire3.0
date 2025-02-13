@@ -50,6 +50,22 @@ export default function LoginForm() {
             setLoading(false)
         }
     }
+
+    const handleProviderLogin = async (provider: string) => {
+        // Affichage du loader pendant le chargement
+        setLoading(true)
+        try {
+            // Connexion avec le fournisseur
+            await signIn(provider, { redirectTo: DEFAULT_LOGIN_REDIRECT })
+
+        } catch (error) {
+            console.error("Error logging in with provider", error)
+
+        } finally {
+            // Désactivation du loader
+            setLoading(false)
+        }
+    }
     /**
      * ! AFFICHAGE (render) de l'application
      */
@@ -146,7 +162,7 @@ export default function LoginForm() {
                                 </Button>
                             </div>
                             <div className="grid gap-2">
-                                <Button type="button" variant="outline" className="w-full font-inter">
+                                <Button type="button" variant="outline" className="w-full font-inter" onClick={() => handleProviderLogin("github")}>
                                     <FaGithub size={18} /> Github
                                 </Button>
                             </div>
