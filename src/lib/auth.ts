@@ -3,6 +3,7 @@ import authConfig from "./auth.config"
 import { PrismaClient } from "@prisma/client"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
+
 const prisma = new PrismaClient()
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -20,6 +21,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             if (user) token.sub = user.id // ✅ Stocke l'ID utilisateur dans le token
             return token
         },
+
     },
     pages: {
         signIn: "/login",

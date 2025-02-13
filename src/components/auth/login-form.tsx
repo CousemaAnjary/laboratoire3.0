@@ -38,6 +38,7 @@ export default function LoginForm() {
     const handleLogin = async (data: z.infer<typeof LoginSchema>) => {
         // Affichage du loader pendant le chargement
         setLoading(true)
+
         try {
             const result = await signIn("credentials", {
                 email: data.email,
