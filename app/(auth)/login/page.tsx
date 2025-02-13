@@ -1,4 +1,8 @@
+"use client"
+import { toast } from "sonner"
+import { useEffect } from "react"
 import LoginForm from "@/src/components/auth/login-form"
+
 
 export default function Login() {
     /**
@@ -9,7 +13,16 @@ export default function Login() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
+    useEffect(() => {
+        // Récupération du message de succès dans le localStorage
+        const message = localStorage.getItem("success")
 
+        if (message) {
+            // Affichage du message de succès
+            toast.success(message)
+            localStorage.removeItem("success")
+        }
+    }, [])
 
     /**
      * ! AFFICHAGE (render) de l'application
