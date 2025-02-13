@@ -21,7 +21,10 @@ export default function Social() {
         setLoadingProvider(provider)
 
         try {
-            await signIn(provider, { redirect: true, callbackUrl: DEFAULT_LOGIN_REDIRECT })
+            await signIn(provider, {
+                redirect: true,
+                callbackUrl: DEFAULT_LOGIN_REDIRECT
+            })
 
         } catch (error) {
             console.error("Erreur lors de la connexion avec le fournisseur :", error)

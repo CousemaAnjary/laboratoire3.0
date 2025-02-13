@@ -12,12 +12,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import Social from "./social"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 
 export default function LoginForm() {
     /**
      * ! STATE (état, données) de l'application
      */
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -36,11 +39,19 @@ export default function LoginForm() {
         // Affichage du loader pendant le chargement
         setLoading(true)
         try {
-            await signIn("credentials", {
+            const result = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                redirectTo: DEFAULT_LOGIN_REDIRECT,
+                redirect: false
             })
+
+            if (result?.error) {
+                toast.error(result.error)
+                return
+            }
+
+            // Redirection vers la page par défaut
+            router.push(DEFAULT_LOGIN_REDIRECT);
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
@@ -137,7 +148,7 @@ export default function LoginForm() {
                                 <span className="bg-background px-2 font-inter text-muted-foreground">Ou continuer avec</span>
                             </div>
                         </div>
-                        
+
                         <Social />
                     </div>
                 </form>
