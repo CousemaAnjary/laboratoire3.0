@@ -12,6 +12,7 @@ export default {
         Google,
         GitHub,
         Credentials({
+
             credentials: { email: {}, password: {} },
 
             authorize: async (credentials) => {
