@@ -49,7 +49,7 @@ export default function RegisterForm() {
             const result = await response.json()
 
             if (!response.ok) {
-                toast.error(result.error)
+                toast.info(result.error)
                 return
             }
 
