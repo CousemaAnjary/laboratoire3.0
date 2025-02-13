@@ -137,6 +137,7 @@ export default function LoginForm() {
                                 <span className="bg-background px-2 font-inter text-muted-foreground">Ou continuer avec</span>
                             </div>
                         </div>
+                        
                         <Social />
                     </div>
                 </form>

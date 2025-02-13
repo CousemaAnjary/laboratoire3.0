@@ -10,6 +10,7 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import Social from "./social"
 
 
 export default function RegisterForm() {
@@ -182,6 +183,14 @@ export default function RegisterForm() {
                                     )}
                                 </Button>
                             </div>
+                            
+                            <div className="relative">
+                                <div className="relative flex justify-center text-xs uppercase">
+                                    <span className="bg-background px-2 font-inter text-muted-foreground">Ou continuer avec</span>
+                                </div>
+                            </div>
+
+                            <Social />
                         </div>
                     </form>
 
