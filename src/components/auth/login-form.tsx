@@ -49,9 +49,9 @@ export default function LoginForm() {
                 toast.error(result.error)
                 return
             }
-
-            // Redirection vers la page par défaut
-            router.push(DEFAULT_LOGIN_REDIRECT);
+            //  Enregistrement du message de succès dans le stockage local
+            localStorage.setItem("success", "Vous êtes connecté avec succès")
+            router.push(DEFAULT_LOGIN_REDIRECT)
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
