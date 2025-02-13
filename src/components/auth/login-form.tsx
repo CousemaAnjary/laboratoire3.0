@@ -1,6 +1,7 @@
 "use client"
 import { z } from "zod"
 import Link from "next/link"
+import Social from "./social"
 import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
@@ -11,7 +12,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-import Social from "./social"
+
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
