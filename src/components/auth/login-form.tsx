@@ -2,19 +2,18 @@
 import { z } from "zod"
 import Link from "next/link"
 import Social from "./social"
+import { toast } from "sonner"
 import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
 import { LoginSchema } from "@/src/lib/schemas/auth"
 import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
 
 export default function LoginForm() {
