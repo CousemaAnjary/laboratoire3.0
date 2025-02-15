@@ -16,7 +16,6 @@ export default {
             credentials: { email: {}, password: {} },
 
             authorize: async (credentials) => {
-
                 try {
                     // Validation des données reçues via votre schéma(par exemple avec Zod)
                     const validated = LoginSchema.safeParse(credentials)
