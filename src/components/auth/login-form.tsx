@@ -46,14 +46,13 @@ export default function LoginForm() {
                 redirect: false,
             })
 
-            console.log("Résultat de signIn:", result); // 🔍 Debugging
+            console.log("Résultat de signIn:", result)
 
             if (result?.error) {
-                // Gestion spécifique pour CredentialsSignin
-                if (result.error === "CredentialsSignin") {
-                    toast.error("Identifiants incorrects. Veuillez vérifier votre email et mot de passe.");
-                }
-                return;
+                toast.error(result.error, {
+                    description: "Veuillez vérifier vos identifiants et réessayer."
+                })
+                return
             }
 
             //  Enregistrement du message de succès dans le stockage local
