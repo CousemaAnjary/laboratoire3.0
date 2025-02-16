@@ -39,14 +39,15 @@ export default {
                 })
 
                 if (!user) {
-                    throw new customError("Aucun compte trouvé avec cet e-mail.")
+                    throw new customError("Aucun compte n'est associé à cette adresse e-mail")
                 }
 
                 // Vérifier le mot de passe
                 const isPasswordValid = await bcrypt.compare(validated.data.password, user.password || "")
 
                 if (!isPasswordValid) {
-                    throw new customError("Mot de passe incorrect.")
+                    throw new customError("Le mot de passe saisi est incorrect. Veuillez réessayer")
+
                 }
 
                 // Retourner l'utilisateur pour créer une session
