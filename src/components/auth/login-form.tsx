@@ -46,12 +46,10 @@ export default function LoginForm() {
                 redirect: false,
             })
 
-            console.log("Résultat de signIn:", result)
+            console.log("Résultat de signIn:", result); // 🔍 Debugging
 
             if (result?.error) {
-                toast.error(result.error, {
-                    description: "Veuillez vérifier vos identifiants et réessayer."
-                })
+                toast.error(result.error)
                 return
             }
 
