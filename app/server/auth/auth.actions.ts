@@ -6,6 +6,7 @@ import { signIn } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
 import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
+
 // Enregistrement d'un nouvel utilisateur
 export async function register(data: z.infer<typeof RegisterSchema>) {
 
@@ -64,7 +65,11 @@ export async function login(data: z.infer<typeof LoginSchema>) {
 
     try {
 
-        await signIn("credentials", data)
+        await signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            redirect: false
+        })
 
         // Retourner un message de succès
         return {
