@@ -6,7 +6,6 @@ import { toast } from "sonner"
 import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { LoginSchema } from "@/src/lib/schemas/auth"
@@ -14,6 +13,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { login } from "@/app/server/auth/auth.actions"
 
 
 export default function LoginForm() {
@@ -40,11 +40,7 @@ export default function LoginForm() {
         setLoading(true)
 
         try {
-            const response = await signIn("credentials", {
-                email: data.email,
-                password: data.password,
-                redirect: false,
-            })
+            const response = await login(data)
 
             if (response?.error) {
                 toast.error(response.error)
