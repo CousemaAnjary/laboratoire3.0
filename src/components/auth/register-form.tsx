@@ -44,7 +44,7 @@ export default function RegisterForm() {
             const response = await register(data)
 
             if (!response.success) {
-                toast.warning(response.error)
+                toast.error(response.error)
 
             } else {
                 //  Enregistrement du message de succès dans le stockage local

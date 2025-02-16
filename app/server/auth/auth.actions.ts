@@ -23,7 +23,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         })
 
         if (existingUser) {
-            throw new Error("Cet email est déjà utilisé")
+            throw new Error("L'adresse e-mail fournie est déjà associée à un compte existant.")
         }
 
         // Hachage du mot de passe
@@ -63,7 +63,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
 export async function login(data: z.infer<typeof LoginSchema>) {
 
     try {
-        
+
         await signIn("credentials", data)
 
         // Retourner un message de succès
