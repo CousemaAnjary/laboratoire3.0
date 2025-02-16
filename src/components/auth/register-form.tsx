@@ -43,14 +43,16 @@ export default function RegisterForm() {
         try {
             const response = await register(data)
 
-            if (!response?.success) {
-                toast.error("Erreur lors de l'inscription")
-                return
-            }
+            if (!response.success) {
+                toast.warning(response.error)
 
-            //  Enregistrement du message de succès dans le stockage local
-            localStorage.setItem("success", response.message)
-            router.push("/login")
+            } else {
+                //  Enregistrement du message de succès dans le stockage local
+                if (response.message) {
+                    localStorage.setItem("success", response.message)
+                }
+                router.push("/login")
+            }
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)

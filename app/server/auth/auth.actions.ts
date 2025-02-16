@@ -22,7 +22,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         })
 
         if (existingUser) {
-            throw new Error("Cet email est déjà utilisé.")
+            throw new Error("Cet email est déjà utilisé")
         }
 
         // Hachage du mot de passe
@@ -50,6 +50,9 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
 
 
     } catch (error) {
-        console.error("Erreur lors de l'inscription :", error)
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : "Erreur interne du serveur",
+        }
     }
 }
