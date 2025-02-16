@@ -51,6 +51,7 @@ export default {
 
                 // Retourner l'utilisateur pour créer une session
                 return user
+
             },
         })
 

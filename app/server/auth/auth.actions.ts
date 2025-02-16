@@ -2,8 +2,9 @@
 
 import { z } from "zod"
 import bcrypt from 'bcryptjs'
+import { signIn } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
-import { RegisterSchema } from "@/src/lib/schemas/auth"
+import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
 
 export async function register(data: z.infer<typeof RegisterSchema>) {
@@ -48,6 +49,27 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         }
 
 
+
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : "Erreur interne du serveur",
+        }
+    }
+}
+
+
+export async function login(data: z.infer<typeof LoginSchema>) {
+
+    try {
+        // 
+        await signIn("credentials", data)
+
+        // Retourner un message de succès
+        return {
+            success: true,
+            message: "Vous êtes connecté avec succès",
+        }
 
     } catch (error) {
         return {

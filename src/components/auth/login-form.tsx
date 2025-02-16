@@ -40,16 +40,14 @@ export default function LoginForm() {
         setLoading(true)
 
         try {
-            const result = await signIn("credentials", {
+            const response = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
                 redirect: false,
             })
 
-            console.log("Résultat de signIn:", result); // 🔍 Debugging
-
-            if (result?.error) {
-                toast.error(result.error)
+            if (response?.error) {
+                toast.error(response.error)
                 return
             }
 
