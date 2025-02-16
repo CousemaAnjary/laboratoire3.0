@@ -12,6 +12,7 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { register } from "@/app/server/auth/auth.actions"
 
 
 export default function RegisterForm() {
@@ -40,21 +41,15 @@ export default function RegisterForm() {
         setLoading(true)
 
         try {
-            const response = await fetch("/api/auth/register", {
-                method: "POST",
-                body: JSON.stringify(data),
-            })
+            const response = await register(data)
 
-            // Resultat de la requête (succès ou erreur)
-            const result = await response.json()
-
-            if (!response.ok) {
-                toast.warning(result.error)
+            if (!response?.success) {
+                toast.error("Erreur lors de l'inscription")
                 return
             }
 
             //  Enregistrement du message de succès dans le stockage local
-            localStorage.setItem("success", result.message)
+            localStorage.setItem("success", response.message)
             router.push("/login")
 
         } catch (error) {

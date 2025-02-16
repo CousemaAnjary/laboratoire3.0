@@ -1,15 +1,16 @@
 import bcrypt from 'bcryptjs'
+import { prisma } from './prisma'
 import { LoginSchema } from "./schemas/auth"
-import { getUserByEmail } from "@/data/user"
 import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
 import { AuthError, type NextAuthConfig } from "next-auth"
 
+
 class customError extends AuthError {
     constructor(message: string) {
         super()
-        this.message = message 
+        this.message = message
     }
 }
 
@@ -33,7 +34,9 @@ export default {
                 }
 
                 // Vérifier si l'utilisateur existe dans la base de données
-                const user = await getUserByEmail(validated.data.email)
+                const user = await prisma.user.findUnique({
+                    where: { email: validated.data.email },
+                })
 
                 if (!user) {
                     throw new customError("Aucun compte trouvé avec cet e-mail.")
