@@ -1,5 +1,5 @@
 import { Group } from "../typeScript/menu"
-import { House } from "lucide-react"
+import { House, LayoutDashboard } from "lucide-react"
 
 export const menuConfig: Group[] = [
     {
@@ -9,7 +9,22 @@ export const menuConfig: Group[] = [
                 label: "Administration",
                 href: "/administration",
                 icon: House,
-            }
+            },
+            {
+                label: "Tableau de bord",
+                href: "#",
+                icon: LayoutDashboard,
+                submenus: [
+                    {
+                        label: "E-commerce",
+                        href: "#",
+                    },
+                    {
+                        label: "Kanban board",
+                        href: "/tableau-de-board/kanban",
+                    },
+                ]
+            },
         ]
     }
 ]
