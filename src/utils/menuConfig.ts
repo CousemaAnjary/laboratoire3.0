@@ -6,7 +6,7 @@ export const menuConfig: Group[] = [
         groupLabel: "Tableaux de bord",
         menus: [
             {
-                label: "Dashboard",
+                label: "Tableau de bord",
                 href: "#",
                 icon: LayoutDashboard,
                 submenus: [
