@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { login } from "@/app/server/auth/auth.actions"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { useSession } from "next-auth/react"
 
 
 export default function LoginForm() {
@@ -22,8 +23,9 @@ export default function LoginForm() {
      * ! STATE (état, données) de l'application
      */
     const router = useRouter()
+    const { update } = useSession()
     const [loading, setLoading] = useState(false)
-    const [isPending, startTransition] = useTransition() // Permet de rafraîchir l'état sans bloquer l'UI
+    const [isPending, startTransition] = useTransition()
     const [showPassword, setShowPassword] = useState(false)
 
 
@@ -45,18 +47,17 @@ export default function LoginForm() {
         try {
             const response = await login(data)
 
-            if (response.error) {
+            if (!response.success) {
                 toast.error(response.error)
                 return
             }
 
-            //  Enregistrement du message de succès dans le stockage local
-            localStorage.setItem("success", "Vous êtes connecté avec succès")
+            //  Met à jour la session immédiatement après la connexion
+            await update()
 
-            //  Rafraîchir la session et les données utilisateur sans recharger la page
+            // 🚀 Rafraîchir la session et rediriger sans bloquer l'UI
             startTransition(() => {
-                router.refresh()
-                router.push(DEFAULT_LOGIN_REDIRECT)
+                router.replace(DEFAULT_LOGIN_REDIRECT) 
             })
 
         } catch (error) {
