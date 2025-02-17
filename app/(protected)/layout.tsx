@@ -10,13 +10,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     /**
      * ! STATE (état, données) de l'application
      */
-    const { open, setOpen, isHydrated } = useSidebarStore();
+    const { open, setOpen, } = useSidebarStore()
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    // ✅ Bloque le rendu jusqu'à ce que Zustand ait bien récupéré `localStorage`
-    if (!isHydrated) return null;
+    // Empêche le flash en attendant `localStorage`
+    if (open === undefined) return null
+
 
     /**
      * ! AFFICHAGE (render) de l'application
