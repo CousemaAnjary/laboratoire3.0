@@ -1,5 +1,6 @@
 import { ScrollArea } from "../ui/scroll-area"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator } from "../ui/sidebar"
+import HeaderSidebar from "./header-sidebar"
 
 export default function AppSidebar() {
     /**
@@ -19,7 +20,7 @@ export default function AppSidebar() {
         <Sidebar variant="floating" collapsible="icon">
             {/* En-tête de la barre latérale */}
             <SidebarHeader>
-                {/* <HeaderSidebar /> */}
+                <HeaderSidebar />
             </SidebarHeader>
 
             <SidebarSeparator />

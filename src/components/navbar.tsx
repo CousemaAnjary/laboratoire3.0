@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Button } from './ui/button'
 import ThemeSwitcher from './theme-switcher'
-import { Contact, House, Info, LayoutTemplate, LogIn, User } from 'lucide-react'
+import { CodeXml, Contact, House, Info,  LogIn, User } from 'lucide-react'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, } from "./ui/select"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
@@ -25,7 +25,7 @@ export default function Navbar() {
 
         {/* Logo et Menu */}
         <div className="ms-5 flex items-center">
-            <LayoutTemplate />
+            <CodeXml />
             <ul className='ms-2 flex space-x-1'>
                 <li>
                     <Link href="/">
