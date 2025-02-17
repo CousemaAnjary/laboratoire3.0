@@ -1,17 +1,12 @@
 import { Group } from "../typeScript/menu"
-import { House, LayoutDashboard } from "lucide-react"
+import { LayoutDashboard, ShoppingBag, SquareKanban } from "lucide-react"
 
 export const menuConfig: Group[] = [
     {
-        groupLabel: "Tableaux de bord",
+        groupLabel: "",
         menus: [
             {
-                label: "Administration",
-                href: "/administration",
-                icon: House,
-            },
-            {
-                label: "Tableau de bord", 
+                label: "Tableau de bord",
                 href: "#",
                 icon: LayoutDashboard,
                 submenus: [
@@ -19,12 +14,24 @@ export const menuConfig: Group[] = [
                         label: "E-commerce",
                         href: "#",
                     },
-                    {
-                        label: "Kanban board",
-                        href: "/tableau-de-board/kanban",
-                    },
                 ]
             },
+        ]
+    },
+    {
+        groupLabel: "Applications",
+        menus: [
+            {
+                label: "Kanban",
+                href: "/applications/kanban",
+                icon: SquareKanban,
+            },
+            {
+                label: "E commerce",
+                href: "/applications/ecommerce",
+                icon:ShoppingBag,
+            },
+
         ]
     }
 ]
