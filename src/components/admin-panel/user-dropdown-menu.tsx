@@ -30,9 +30,11 @@ export default function UserDropdownMenu() {
                     variant="outline"
                     className="relative size-8 rounded-full"
                 >
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
+                    <Avatar className="size-8">
+                        <AvatarImage
+                            src={session?.user?.image ?? undefined}
+                            alt="@shadcn" />
+                        <AvatarFallback className="bg-transparent">JD</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
