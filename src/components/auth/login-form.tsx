@@ -55,9 +55,9 @@ export default function LoginForm() {
             //  Met à jour la session immédiatement après la connexion
             await update()
 
-            // 🚀 Rafraîchir la session et rediriger sans bloquer l'UI
+            //  Rafraîchir la session et rediriger sans bloquer l'UI
             startTransition(() => {
-                router.replace(DEFAULT_LOGIN_REDIRECT) 
+                router.replace(DEFAULT_LOGIN_REDIRECT)
             })
 
         } catch (error) {
