@@ -5,7 +5,7 @@ import { getMenu } from "@/src/utils/menu"
 import { usePathname } from "next/navigation"
 import { ChevronRight, Ellipsis } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "../ui/sidebar"
+import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "../ui/sidebar"
 
 
 export default function SidebarContentMenu() {
@@ -35,21 +35,17 @@ export default function SidebarContentMenu() {
                                     {/* Élément du menu */}
                                     <SidebarMenuItem>
                                         <CollapsibleTrigger asChild>
-                                            <Link href={menu.href}>
-                                                <SidebarMenuButton variant={menu.active ? "outline" : "default"} tooltip={menu.label}>
-                                                    {menu.icon && <menu.icon className="text-black" />} {/* ✅ Affiche l'icône si elle existe */}
-                                                    <span className="font-inter">{menu.label}</span>
-                                                </SidebarMenuButton>
+                                            <Link href={menu.href} passHref>
+                                                <SidebarMenuButton asChild variant={menu.active ? "outline" : "default"} tooltip={menu.label}>
+                                                    <span className="flex items-center gap-2">
+                                                        {menu.icon && <menu.icon className="text-black" />}
+                                                        <span className="font-inter">{menu.label}</span>
+                                                        {menu.submenus && menu.submenus.length > 0 && (
+                                                            <ChevronRight size={15} className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                                                        )}
+                                                    </span>
 
-                                                {/* Icône Chevron pour indiquer un sous-menu */}
-                                                {menu.submenus && menu.submenus.length > 0 && (
-                                                    <SidebarMenuBadge>
-                                                        <ChevronRight
-                                                            size={15}
-                                                            className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
-                                                        />
-                                                    </SidebarMenuBadge>
-                                                )}
+                                                </SidebarMenuButton>
                                             </Link>
                                         </CollapsibleTrigger>
 
@@ -59,8 +55,8 @@ export default function SidebarContentMenu() {
                                                 <SidebarMenuSub>
                                                     {menu.submenus.map((submenu) => (
                                                         <SidebarMenuSubItem key={submenu.href}>
-                                                            <Link href={submenu.href}>
-                                                                <SidebarMenuSubButton isActive={submenu.active} className="ms-1">
+                                                            <Link href={submenu.href} passHref>
+                                                                <SidebarMenuSubButton asChild isActive={submenu.active} className="ms-1">
                                                                     <span className={`font-inter text-xs font-medium ${submenu.active ? "text-blue-900 hover:text-blue-900" : ""}`}>
                                                                         {submenu.label}
                                                                     </span>

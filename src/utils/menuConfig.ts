@@ -11,7 +11,7 @@ export const menuConfig: Group[] = [
                 icon: House,
             },
             {
-                label: "Tableau de bord",
+                label: "Dashboard", 
                 href: "#",
                 icon: LayoutDashboard,
                 submenus: [
