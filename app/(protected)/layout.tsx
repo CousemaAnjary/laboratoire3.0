@@ -10,12 +10,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     /**
      * ! STATE (état, données) de l'application
      */
-    const { open, setOpen } = useSidebarStore()
+    const { open, setOpen, isHydrated } = useSidebarStore();
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-
+    // ✅ Bloque le rendu jusqu'à ce que Zustand ait bien récupéré `localStorage`
+    if (!isHydrated) return null;
 
     /**
      * ! AFFICHAGE (render) de l'application
