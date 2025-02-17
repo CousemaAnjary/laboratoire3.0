@@ -30,7 +30,21 @@ export default function Dashboard() {
     return (
         <>
           <Toaster richColors />
-            <h1>Dashboard</h1>
+          <div className="flex flex-col gap-4">
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                    </div>
+                    <div className="aspect-video rounded-xl bg-white shadow" />
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                        <div className="aspect-video rounded-xl bg-white shadow" />
+                    </div>
+                </div>
         </>
     )
 }

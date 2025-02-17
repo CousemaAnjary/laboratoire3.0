@@ -22,7 +22,7 @@ export default function AppSidebar() {
      * ! AFFICHAGE (render) de l'application
      */
     return (
-        <Sidebar variant="inset" collapsible="offcanvas">
+        <Sidebar variant="floating" collapsible="offcanvas">
             {/* En-tête de la barre latérale */}
             <SidebarHeader>
                 <HeaderSidebar />
