@@ -4,11 +4,11 @@ import { z } from "zod"
 import Link from "next/link"
 import Social from "./social"
 import { toast } from "sonner"
-import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
+import { useState, useTransition } from "react"
 import { LoginSchema } from "@/src/lib/schemas/auth"
 import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -23,7 +23,9 @@ export default function LoginForm() {
      */
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [isPending, startTransition] = useTransition() // Permet de rafraîchir l'état sans bloquer l'UI
     const [showPassword, setShowPassword] = useState(false)
+
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -50,7 +52,12 @@ export default function LoginForm() {
 
             //  Enregistrement du message de succès dans le stockage local
             localStorage.setItem("success", "Vous êtes connecté avec succès")
-            router.push(DEFAULT_LOGIN_REDIRECT)
+
+            //  Rafraîchir la session et les données utilisateur sans recharger la page
+            startTransition(() => {
+                router.refresh()
+                router.push(DEFAULT_LOGIN_REDIRECT)
+            })
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
@@ -131,7 +138,7 @@ export default function LoginForm() {
 
                         <div className="grid">
                             <Button type="submit" className="w-full font-inter" disabled={loading}>
-                                {loading ? (
+                                {loading || isPending ? (
                                     <>
                                         <Loader className="mr-2 size-4 animate-spin" />
                                         Veuillez patienter
