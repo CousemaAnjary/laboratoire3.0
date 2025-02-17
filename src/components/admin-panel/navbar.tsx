@@ -17,7 +17,7 @@ export default function Navbar() {
      * ! AFFICHAGE (render) de l'application
      */
     return (
-        <nav className="sticky top-0 z-50 mx-auto flex items-center justify-between py-4 backdrop-blur-lg">
+        <nav className="sticky top-0 z-50 flex items-center justify-between py-4 backdrop-blur-lg">
             <div className="flex items-center gap-2 px-4">
                 <SidebarTrigger className="-ml-1" />
                 <Separator orientation="vertical" className="mr-2 h-4" />
