@@ -1,6 +1,11 @@
-import { ScrollArea } from "../ui/scroll-area"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator } from "../ui/sidebar"
+"use client"
+
 import HeaderSidebar from "./header-sidebar"
+import { ScrollArea } from "../ui/scroll-area"
+import SidebarContentMenu from "./content-sidebar-menu"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator } from "../ui/sidebar"
+
+
 
 export default function AppSidebar() {
     /**
@@ -28,7 +33,7 @@ export default function AppSidebar() {
             {/* Contenu de la barre latérale */}
             <ScrollArea>
                 <SidebarContent>
-                    {/* <SidebarContentMenu menuGroups={menuGroups} /> */}
+                    <SidebarContentMenu />
                 </SidebarContent>
             </ScrollArea>
 
