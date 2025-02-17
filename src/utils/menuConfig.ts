@@ -3,10 +3,10 @@ import { LayoutDashboard, ShoppingBag, SquareKanban } from "lucide-react"
 
 export const menuConfig: Group[] = [
     {
-        groupLabel: "",
+        groupLabel: "Tableaux de bord",
         menus: [
             {
-                label: "Tableau de bord",
+                label: "Dashboard",
                 href: "#",
                 icon: LayoutDashboard,
                 submenus: [
