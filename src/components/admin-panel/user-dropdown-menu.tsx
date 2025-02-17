@@ -1,8 +1,11 @@
-import { LogOut, Settings, User } from "lucide-react";
-import Link from "next/link";
-import { AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
+"use client"
+
+import Link from "next/link"
+import { Button } from "../ui/button"
+import { LogOut, Settings, User } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+
 
 export default function UserDropdownMenu() {
     /**
@@ -25,7 +28,10 @@ export default function UserDropdownMenu() {
                     variant="outline"
                     className="relative size-8 rounded-full"
                 >
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
                 </Button>
             </DropdownMenuTrigger>
 
