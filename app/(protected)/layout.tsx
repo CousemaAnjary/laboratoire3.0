@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     /**
      * ! STATE (état, données) de l'application
      */
-    const { open, setOpen } = useSidebarStore();
+    const { open, setOpen } = useSidebarStore()
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
      * ! AFFICHAGE (render) de l'application
      */
     return (
-        <SidebarProvider open={open} onOpenChange={setOpen}  className="bg-slate-100">
+        <SidebarProvider open={open} onOpenChange={setOpen} className="bg-slate-100">
             <AppSidebar />
             <SidebarInset className="relative h-screen overflow-x-hidden bg-slate-100"> {/* Ajoutez overflow-x-hidden */}
                 <Navbar />
