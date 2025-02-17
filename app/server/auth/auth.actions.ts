@@ -49,8 +49,6 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
             message: "Utilisateur enregistré avec succès",
         }
 
-
-
     } catch (error) {
         return {
             success: false,
