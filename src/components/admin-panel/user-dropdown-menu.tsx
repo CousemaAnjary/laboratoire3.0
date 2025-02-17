@@ -41,6 +41,7 @@ export default function UserDropdownMenu() {
                         <p className="mb-1 font-inter text-sm font-medium leading-none"> ABDILLAH Cousema Anjary</p>
                         <p className="font-inter text-xs leading-none text-muted-foreground">
                             {/* {user?.email} */}
+                            anjaryabdillah@gmail.com
                         </p>
                     </div>
                 </DropdownMenuLabel>
