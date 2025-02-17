@@ -56,8 +56,8 @@ export default function SidebarContentMenu() {
                                                     {menu.submenus.map((submenu) => (
                                                         <SidebarMenuSubItem key={submenu.href}>
                                                             <Link href={submenu.href} passHref>
-                                                                <SidebarMenuSubButton asChild isActive={submenu.active} className="ms-1">
-                                                                    <span className={`font-inter text-xs font-medium ${submenu.active ? "text-blue-900 hover:text-blue-900" : ""}`}>
+                                                                <SidebarMenuSubButton asChild isActive={submenu.active} >
+                                                                    <span className={`font-spaceGrotesk text-xs font-medium ${submenu.active ? "text-blue-900 hover:text-blue-900" : ""}`}>
                                                                         {submenu.label}
                                                                     </span>
                                                                 </SidebarMenuSubButton>
