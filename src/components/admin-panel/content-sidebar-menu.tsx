@@ -5,7 +5,7 @@ import { getMenu } from "@/src/utils/menu"
 import { usePathname } from "next/navigation"
 import { ChevronRight, Ellipsis } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "../ui/sidebar"
+import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "../ui/sidebar"
 
 
 export default function SidebarContentMenu() {
@@ -40,12 +40,14 @@ export default function SidebarContentMenu() {
                                                     <span className="flex items-center gap-2">
                                                         {menu.icon && <menu.icon className="text-black" />}
                                                         <span className="font-inter">{menu.label}</span>
-                                                        {menu.submenus && menu.submenus.length > 0 && (
-                                                            <ChevronRight size={15} className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                                        )}
                                                     </span>
-
                                                 </SidebarMenuButton>
+                                                
+                                                 <SidebarMenuBadge>
+                                                 {menu.submenus && menu.submenus.length > 0 && (
+                                                    <ChevronRight size={15} className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                                                )}
+                                                 </SidebarMenuBadge>
                                             </Link>
                                         </CollapsibleTrigger>
 
