@@ -1,16 +1,9 @@
 "use client"
 
 import { getMenu } from "@/src/utils/menu"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "../ui/breadcrumb"
-
 import { usePathname } from "next/navigation"
+import {Breadcrumb,BreadcrumbItem,BreadcrumbLink, BreadcrumbSeparator, BreadcrumbList, BreadcrumbPage} from "../ui/breadcrumb"
+
 
 export default function DynamicBreadcrumb() {
     const pathname = usePathname();
