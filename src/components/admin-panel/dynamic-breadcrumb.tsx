@@ -6,6 +6,7 @@ import {Breadcrumb,BreadcrumbItem,BreadcrumbLink, BreadcrumbSeparator, Breadcrum
 
 
 export default function DynamicBreadcrumb() {
+    
     const pathname = usePathname()
     const menuGroups = getMenu(pathname)
 
