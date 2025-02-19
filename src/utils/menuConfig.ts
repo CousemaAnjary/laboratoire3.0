@@ -34,7 +34,7 @@ export const menuConfig: Group[] = [
         menus: [
             {
                 label: "Kanban",
-                href: "/admin/kanban",
+                href: "#",
                 icon: SquareKanban,
             },
             {
