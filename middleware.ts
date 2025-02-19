@@ -33,4 +33,4 @@ export default async function middleware(req: NextRequest) {
 // ✅ Middleware appliqué uniquement aux pages Next.js (exclut les fichiers statiques et API)
 export const config = {
     matcher: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-};
+}
