@@ -1,6 +1,6 @@
 "use client"
 
-import { getMenu } from "@/src/utils/menu";
+import { getMenu } from "@/src/utils/menu"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,7 +10,6 @@ import {
     BreadcrumbSeparator,
 } from "../ui/breadcrumb"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export default function DynamicBreadcrumb() {
@@ -22,7 +21,7 @@ export default function DynamicBreadcrumb() {
     const activeSubmenu = activeMenu?.submenus?.find((submenu) => submenu.active);
 
     // Vérifier si l'utilisateur est sur la page "Administration"
-    if (pathname === "/administration") {
+    if (pathname === "/dashboard") {
         return (
             <Breadcrumb>
                 <BreadcrumbList>
@@ -39,11 +38,9 @@ export default function DynamicBreadcrumb() {
             <BreadcrumbList>
                 {/* Lien vers "Administration" (toujours affiché) */}
                 <BreadcrumbItem>
-                    <Link href="/administration">
-                        <BreadcrumbLink className="text-xs font-medium text-gray-600 hover:text-gray-800">
-                            Administration
-                        </BreadcrumbLink>
-                    </Link>
+                    <BreadcrumbLink href="/dashboard" className="text-xs font-medium text-gray-600 hover:text-gray-800">
+                        Administration
+                    </BreadcrumbLink>
                 </BreadcrumbItem>
 
                 {activeMenu && (
@@ -52,11 +49,11 @@ export default function DynamicBreadcrumb() {
 
                         <BreadcrumbItem>
                             {activeSubmenu ? (
-                                <Link href={activeMenu.href}>
-                                    <BreadcrumbLink className="text-xs font-medium text-gray-600 hover:text-gray-800">
+                              
+                                    <BreadcrumbLink href={activeMenu.href} className="text-xs font-medium text-gray-600 hover:text-gray-800">
                                         {activeMenu.label}
                                     </BreadcrumbLink>
-                                </Link>
+                              
                             ) : (
                                 <BreadcrumbPage className="text-xs font-medium text-gray-800">{activeMenu.label}</BreadcrumbPage>
                             )}
