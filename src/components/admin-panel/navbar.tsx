@@ -1,6 +1,8 @@
 import { Separator } from "../ui/separator"
 import { SidebarTrigger } from "../ui/sidebar"
 import UserDropdownMenu from "./user-dropdown-menu"
+import DynamicBreadcrumb from "./dynamic-breadcrumb"
+
 
 export default function Navbar() {
     /**
@@ -21,7 +23,7 @@ export default function Navbar() {
             <div className="flex items-center gap-2 px-4">
                 <SidebarTrigger className="-ml-1" />
                 <Separator orientation="vertical" className="mr-2 h-4" />
-                {/* <DynamicBreadcrumb /> */}
+                <DynamicBreadcrumb />
             </div>
             <div className="me-10 flex justify-end space-x-3">
                 <UserDropdownMenu />

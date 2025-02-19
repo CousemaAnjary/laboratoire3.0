@@ -10,17 +10,20 @@ import { menuItems } from "./menuConfig"
 export function getMenu(pathname: string): Group[] {
     return menuItems.map((group) => ({
         ...group,
+        menus: group.menus.map((menu) => {
+            const isActive =
+                pathname === menu.href || (menu.submenus?.some(sub => sub.href === pathname));
 
-        menus: group.menus.map((menu) => ({
-            ...menu,
-
-            active: pathname === menu.href || pathname.startsWith(menu.href), //  Détecte si actif
-            submenus: menu.submenus
-                ? menu.submenus.map((submenu) => ({
-                    ...submenu,
-                    active: pathname === submenu.href || pathname.startsWith(submenu.href),
-                }))
-                : [],
-        })),
+            return {
+                ...menu,
+                active: isActive,
+                submenus: menu.submenus
+                    ? menu.submenus.map((submenu) => ({
+                        ...submenu,
+                        active: pathname === submenu.href,
+                    }))
+                    : [],
+            };
+        }),
     }));
 }

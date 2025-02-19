@@ -18,11 +18,11 @@ export const menuConfig: Group[] = [
                 submenus: [
                     {
                         label: "Kanban-board",
-                        href: "/admin/dashboard/kanban",
+                        href: "#",
                     },
                     {
                         label: "Facturation",
-                        href: "/admin/dashboard/billing",
+                        href: "/#",
                     },
                 ]
             },
