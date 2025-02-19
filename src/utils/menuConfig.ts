@@ -1,5 +1,5 @@
 import { Group } from "../typeScript/menu"
-import { LayoutDashboard, Receipt, SquareKanban } from "lucide-react"
+import { Key, LayoutDashboard, Receipt, Settings2, SquareKanban, Users } from "lucide-react"
 
 export const menuConfig: Group[] = [
     {
@@ -37,7 +37,29 @@ export const menuConfig: Group[] = [
             },
 
         ]
-    }
+    },
+    // Groupe de menus pour les paramètres
+    {
+        groupLabel: "Paramètres",
+        menus: [
+            {
+                label: "Configurations",
+                href: "#",
+                icon: Settings2,
+            },
+            {
+                label: "Droit d'accès",
+                href: "/droit-acces",
+                icon: Key,
+              
+            },
+            {
+                label: "Rôles et Permissions",
+                href: "/roles-permissions",
+                icon: Users,
+            }
+        ]
+    },
 ]
 
 export const menuItems = menuConfig
