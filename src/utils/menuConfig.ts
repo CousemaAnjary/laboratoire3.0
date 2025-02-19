@@ -1,5 +1,5 @@
 import { Group } from "../typeScript/menu"
-import { LayoutDashboard, Receipt,  SquareKanban } from "lucide-react"
+import { LayoutDashboard, Receipt, SquareKanban } from "lucide-react"
 
 export const menuConfig: Group[] = [
     {
@@ -11,8 +11,12 @@ export const menuConfig: Group[] = [
                 icon: LayoutDashboard,
                 submenus: [
                     {
-                        label: "E commerce",
-                        href: "#",
+                        label: "Kanban-board",
+                        href: "/admin/dashboard/kanban",
+                    },
+                    {
+                        label: "Facturation",
+                        href: "/admin/dashboard/billing",
                     },
                 ]
             },
@@ -23,14 +27,13 @@ export const menuConfig: Group[] = [
         menus: [
             {
                 label: "Kanban",
-                href: "/applications/kanban",
+                href: "/admin/kanban",
                 icon: SquareKanban,
             },
             {
                 label: "Facturation",
-                href: "/applications/facturation",
-                
-                icon:Receipt ,
+                href: "/admin/billing",
+                icon: Receipt,
             },
 
         ]
