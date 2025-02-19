@@ -6,8 +6,8 @@ import {Breadcrumb,BreadcrumbItem,BreadcrumbLink, BreadcrumbSeparator, Breadcrum
 
 
 export default function DynamicBreadcrumb() {
-    const pathname = usePathname();
-    const menuGroups = getMenu(pathname);
+    const pathname = usePathname()
+    const menuGroups = getMenu(pathname)
 
     // Trouver les menus actifs
     const activeMenu = menuGroups.flatMap((group) => group.menus).find((menu) => menu.active);
@@ -23,7 +23,7 @@ export default function DynamicBreadcrumb() {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-        );
+        )
     }
 
     return (
@@ -64,5 +64,5 @@ export default function DynamicBreadcrumb() {
                 )}
             </BreadcrumbList>
         </Breadcrumb>
-    );
+    )
 }
