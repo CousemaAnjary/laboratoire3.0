@@ -2,11 +2,11 @@
 
 import { getMenu } from "@/src/utils/menu"
 import { usePathname } from "next/navigation"
-import {Breadcrumb,BreadcrumbItem,BreadcrumbLink, BreadcrumbSeparator, BreadcrumbList, BreadcrumbPage} from "../ui/breadcrumb"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
 
 
 export default function DynamicBreadcrumb() {
-    
+
     const pathname = usePathname()
     const menuGroups = getMenu(pathname)
 
@@ -20,7 +20,7 @@ export default function DynamicBreadcrumb() {
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
-                        <BreadcrumbPage className="text-xs font-medium text-gray-800">Administration</BreadcrumbPage>
+                        <BreadcrumbPage className="font-spaceGrotesk text-xs font-medium text-gray-800">Administration</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
@@ -32,7 +32,7 @@ export default function DynamicBreadcrumb() {
             <BreadcrumbList>
                 {/* Lien vers "Administration" (toujours affiché) */}
                 <BreadcrumbItem>
-                    <BreadcrumbLink href="/dashboard" className="text-xs font-medium text-gray-600 hover:text-gray-800">
+                    <BreadcrumbLink href="/dashboard" className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800">
                         Administration
                     </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -43,13 +43,13 @@ export default function DynamicBreadcrumb() {
 
                         <BreadcrumbItem>
                             {activeSubmenu ? (
-                              
-                                    <BreadcrumbLink href={activeMenu.href} className="text-xs font-medium text-gray-600 hover:text-gray-800">
-                                        {activeMenu.label}
-                                    </BreadcrumbLink>
-                              
+
+                                <BreadcrumbLink href={activeMenu.href} className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800">
+                                    {activeMenu.label}
+                                </BreadcrumbLink>
+
                             ) : (
-                                <BreadcrumbPage className="text-xs font-medium text-gray-800">{activeMenu.label}</BreadcrumbPage>
+                                <BreadcrumbPage className="font-spaceGrotesk text-xs font-medium text-gray-800">{activeMenu.label}</BreadcrumbPage>
                             )}
                         </BreadcrumbItem>
                     </>
@@ -59,7 +59,7 @@ export default function DynamicBreadcrumb() {
                     <>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="text-xs font-medium text-gray-800">{activeSubmenu.label}</BreadcrumbPage>
+                            <BreadcrumbPage className="font-spaceGrotesk text-xs font-medium text-gray-800">{activeSubmenu.label}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </>
                 )}
