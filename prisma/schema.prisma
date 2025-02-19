@@ -52,6 +52,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  // invoices      Invoice[] @relation("UserInvoices")
  
   @@map("users")
 }
@@ -64,3 +65,55 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+
+// // 🔹 Enum pour les statuts des factures (plus lisible)
+// enum InvoiceStatus {
+//   PENDING      // En attente
+//   PAID         // Payée
+//   OVERDUE      // En retard
+//   CANCELLED    // Annulée
+// }
+
+
+// model InvoiceLine {
+//   id          String   @id @default(uuid())
+//   description String   @default("")
+//   quantity    Int      @default(1) // Par défaut, une quantité de 1
+//   unitPrice   Float    @default(0)
+//   totalPrice  Float    @default(0) // Ajout d'un champ calculé pour éviter les recalculs
+
+//   // 🔹 Relation avec Invoice
+//   invoiceId   String?
+//   invoice     Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
+
+//   createdAt   DateTime  @default(now())
+//   updatedAt   DateTime  @updatedAt
+// }
+
+// model Invoice {
+//   id            String        @id @default(uuid()) // UUID automatique
+//   name          String
+//   issuerName    String        @default("")
+//   issuerAddress String        @default("")
+//   clientName    String        @default("")
+//   clientAddress String        @default("")
+//   invoiceDate   DateTime      @default(now()) // Utilisation de DateTime pour une meilleure gestion
+//   dueDate       DateTime
+//   vatActive     Boolean       @default(false)
+//   vatRate       Float         @default(20)
+//   status        InvoiceStatus @default(PENDING) // Enum pour le statut
+//   totalAmount   Float         @default(0)       // Champ calculé pour éviter les recalculs fréquents
+
+//   // 🔹 Relation avec InvoiceLine
+//   lines         InvoiceLine[] @relation("InvoiceLines")
+
+//   // 🔹 Relation avec l'utilisateur
+//   userId        String
+//   createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
+
+//   // 🔹 Ajout des timestamps pour un meilleur suivi
+//   createdAt     DateTime      @default(now())
+//   updatedAt     DateTime      @updatedAt
+// }
+
