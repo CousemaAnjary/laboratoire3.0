@@ -24,6 +24,7 @@ const generateUniqueId = async () => {
 
 
 export async function createFacture(email: string, data: z.infer<typeof FacturationSchema>) {
+    
     try {
         // Validation des données avec Zod
         const validated = FacturationSchema.safeParse(data)
@@ -41,7 +42,6 @@ export async function createFacture(email: string, data: z.infer<typeof Facturat
             return { success: false, error: "Utilisateur introuvable" }
         }
 
-        // 🔹 Création de la facture dans une transaction pour assurer l'intégrité
         const facture = await prisma.$transaction(async (prisma) => {
             return await prisma.invoice.create({
                 data: {
