@@ -1,19 +1,21 @@
 "use client"
-import { Button } from "@/src/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/components/ui/form"
-import { Input } from "@/src/components/ui/input"
 
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { Input } from "@/src/components/ui/input"
+import { Button } from "@/src/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FacturationSchema } from "@/src/lib/schemas/facturation"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/components/ui/form"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
+
 
 export default function Facturation() {
     /**
      * ! STATE (état, données) de l'application
      */
     const form = useForm({
-        resolver: zodResolver(),
+        resolver: zodResolver(FacturationSchema),
         defaultValues: {
             name: "",
         },
