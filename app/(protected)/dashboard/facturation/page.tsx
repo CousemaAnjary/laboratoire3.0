@@ -21,7 +21,7 @@ export default function Facturation() {
             </div>
 
             <div className="grid cursor-pointer gap-4 md:grid-cols-3">
-                <Card className="w-[350px] rounded-sm shadow-sm">
+                <Card className="rounded-sm  border-dashed border-slate-300 bg-transparent shadow-sm">
                     <CardHeader>
                         <CardTitle className="font-inter font-medium">Créer une facture</CardTitle>
                         <CardDescription className="font-spaceGrotesk">Créer une nouvelle facture pour un client</CardDescription>
