@@ -12,27 +12,34 @@ export async function createFacture(email: string, data: z.infer<typeof Facturat
         const validated = FacturationSchema.safeParse(data)
 
         if (!validated.success) {
-            throw new Error("Données invalides: " + validated.error.format())
+            return { success: false, error: "Données invalides" }
         }
 
+        // 🔹 Vérification de l'utilisateur
         const user = await prisma.user.findUnique({
             where: { email },
         })
 
-        if (user) {
-            const facture = await prisma.invoice.create({
+        if (!user) {
+            return { success: false, error: "Utilisateur introuvable" }
+        }
+
+        // 🔹 Création de la facture dans une transaction pour assurer l'intégrité
+        const facture = await prisma.$transaction(async (prisma) => {
+            return await prisma.invoice.create({
                 data: {
                     name: validated.data.name,
                     userId: user.id,
-                }
+                },
             })
+        })
 
-            return {
-                success: true,
-                facture,
-                message: "Facture créée avec succès",
-            }
+        return {
+            success: true,
+            facture,
+            message: "Facture créée avec succès",
         }
+
 
     } catch (error) {
         return {
