@@ -42,9 +42,6 @@ export async function createFacture(email: string, data: z.infer<typeof Facturat
 
 
     } catch (error) {
-        return {
-            success: false,
-            error: error instanceof Error ? error.message : "Erreur interne du serveur",
-        }
+        console.error("Erreur lors de la création de la facture:", error);
     }
 }
