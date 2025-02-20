@@ -86,8 +86,9 @@ enum InvoiceStatus {
 
 // 🔹 Modèle des Factures
 model Invoice {
-  id String @id @default(uuid())
-
+  id            String @id @default(uuid())
+  invoiceNumber String @unique 
+  
   // 🔹 Informations générales sur la facture
   name          String
   issuerName    String?
@@ -96,7 +97,7 @@ model Invoice {
   clientAddress String?
 
   // 🔹 Dates clés de la facture
-  invoiceDate DateTime @default(now())
+  invoiceDate DateTime  @default(now())
   dueDate     DateTime?
 
   // 🔹 TVA et statut de la facture

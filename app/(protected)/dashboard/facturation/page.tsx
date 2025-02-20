@@ -1,6 +1,7 @@
 "use client"
 
 import { z } from "zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useSession } from "next-auth/react"
 import { Input } from "@/src/components/ui/input"
@@ -13,12 +14,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/compone
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
 
 
+
 export default function Facturation() {
     /**
      * ! STATE (état, données) de l'application
      */
     const { data: session } = useSession()
     const email = session?.user?.email as string
+
+    const [isOpen, setIsOpen] = useState(false)
+
 
     const form = useForm({
         resolver: zodResolver(FacturationSchema),
@@ -32,9 +37,12 @@ export default function Facturation() {
      */
     const handleSubmit = async (data: z.infer<typeof FacturationSchema>) => {
         try {
-            await createFacture(email, data)
+            const response = await createFacture(email, data);
+            if (!response || !response.success) {
+                throw new Error(response?.error || "Une erreur est survenue");
+            }
             form.reset()
-
+            setIsOpen(false);
         } catch (error) {
             console.error(error)
         }
@@ -51,7 +59,7 @@ export default function Facturation() {
             </div>
 
             <div className="grid cursor-pointer gap-4 md:grid-cols-3">
-                <Dialog>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogTrigger asChild>
                         <Card className="w-[350px] rounded-sm  border-dashed border-slate-300 bg-transparent shadow-sm">
                             <CardHeader>

@@ -4,6 +4,7 @@ CREATE TYPE "InvoiceStatus" AS ENUM ('PENDING', 'PAID', 'OVERDUE', 'CANCELLED');
 -- CreateTable
 CREATE TABLE "Invoice" (
     "id" TEXT NOT NULL,
+    "invoiceNumber" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "issuerName" TEXT,
     "issuerAddress" TEXT,
@@ -35,6 +36,9 @@ CREATE TABLE "InvoiceLine" (
 
     CONSTRAINT "InvoiceLine_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Invoice_invoiceNumber_key" ON "Invoice"("invoiceNumber");
 
 -- AddForeignKey
 ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
