@@ -60,7 +60,6 @@ model User {
 
   accounts Account[]
   sessions Session[]
-  invoices Invoice[] @relation("UserInvoices")
 
   @@map("users")
 }
@@ -74,67 +73,4 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
-}
-
-//🔹 Enum pour les statuts des factures
-enum InvoiceStatus {
-  PENDING // En attente
-  PAID // Payée
-  OVERDUE // En retard
-  CANCELLED // Annulée
-}
-
-// 🔹 Modèle des Factures
-model Invoice {
-  id String @id
-
-  // 🔹 Informations générales sur la facture
-  name          String
-  issuerName    String?
-  issuerAddress String?
-  clientName    String?
-  clientAddress String?
-
-  // 🔹 Dates clés de la facture
-  invoiceDate DateTime  @default(now())
-  dueDate     DateTime?
-
-  // 🔹 TVA et statut de la facture
-  vatActive Boolean       @default(false)
-  vatRate   Float         @default(20)
-  status    InvoiceStatus @default(PENDING)
-
-  // 🔹 Montant total de la facture
-  totalAmount Float @default(0)
-
-  // 🔹 Relation avec les lignes de facturation
-  lines InvoiceLine[] @relation("InvoiceLines")
-
-  // 🔹 Relation avec l'utilisateur qui a créé la facture
-  userId      String
-  createdById User   @relation("UserInvoices", fields: [userId], references: [id])
-
-  // 🔹 Timestamps pour le suivi
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model InvoiceLine {
-  id String @id @default(uuid())
-
-  // 🔹 Description de l'article ou du service facturé
-  description String?
-
-  // 🔹 Détails de la quantité et des prix
-  quantity   Int   @default(1) // Quantité par défaut : 1
-  unitPrice  Float @default(0) // Prix unitaire
-  totalPrice Float @default(0) // Prix total (calculé)
-
-  // 🔹 Relation avec la facture associée
-  invoiceId String?
-  invoice   Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
-
-  // 🔹 Timestamps pour le suivi des modifications
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
