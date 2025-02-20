@@ -1,9 +1,26 @@
 "use server"
 
 import { z } from "zod"
+import { randomBytes } from "crypto"
 import { prisma } from "@/src/lib/prisma"
 import { FacturationSchema } from "@/src/lib/schemas/facturation"
 
+
+const generateUniqueId = async () => {
+    let uniqueId
+    let isUnique = false
+
+    while (!isUnique) {
+        uniqueId = randomBytes(3).toString('hex')
+        const existingInvoice = await prisma.invoice.findUnique({
+            where: { id: uniqueId }
+        })
+        if (!existingInvoice) {
+            isUnique = true
+        }
+    }
+    return uniqueId
+}
 
 
 export async function createFacture(email: string, data: z.infer<typeof FacturationSchema>) {
@@ -28,6 +45,7 @@ export async function createFacture(email: string, data: z.infer<typeof Facturat
         const facture = await prisma.$transaction(async (prisma) => {
             return await prisma.invoice.create({
                 data: {
+                    id: await generateUniqueId() as string,
                     name: validated.data.name,
                     userId: user.id,
                 },
