@@ -20,7 +20,7 @@ export default function Facturation() {
                 <h1 className="font-spaceGrotesk font-medium text-gray-800">Mes factures en cours</h1>
             </div>
 
-            <div className=" grid gap-4 md:grid-cols-3">
+            <div className="grid cursor-pointer gap-4 md:grid-cols-3">
                 <Card className="rounded-sm shadow-sm">
                     <CardHeader>
                         <CardTitle className="font-inter font-medium">Créer une facture</CardTitle>
