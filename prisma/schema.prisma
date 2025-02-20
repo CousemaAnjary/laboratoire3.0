@@ -13,36 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 📌 Modèle des Comptes Utilisateurs (Authentification OAuth)
+
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
+// 📌 Modèle des Sessions Utilisateurs
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("sessions")
 }
- 
+
+// 📌 Modèle des Utilisateurs
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -50,70 +57,70 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String?
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // invoices      Invoice[] @relation("UserInvoices")
- 
+
+  accounts Account[]
+  sessions Session[]
+  invoices Invoice[] @relation("UserInvoices")
+
   @@map("users")
 }
- 
+
+// 📌 Modèle pour les Tokens de Vérification (Email, Authentification à Deux Facteurs...)
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
 
+// 📌 Modèles pour la Facturation
 
-// // 🔹 Enum pour les statuts des factures (plus lisible)
-// enum InvoiceStatus {
-//   PENDING      // En attente
-//   PAID         // Payée
-//   OVERDUE      // En retard
-//   CANCELLED    // Annulée
-// }
+//🔹 Enum pour les statuts des factures
+enum InvoiceStatus {
+  PENDING // En attente
+  PAID // Payée
+  OVERDUE // En retard
+  CANCELLED // Annulée
+}
 
+// 🔹 Modèle des Factures
+model Invoice {
+  id            String        @id @default(uuid()) 
+  name          String
+  issuerName    String        @default("")
+  issuerAddress String        @default("")
+  clientName    String        @default("")
+  clientAddress String        @default("")
+  invoiceDate   DateTime      @default(now())
+  dueDate       DateTime
+  vatActive     Boolean       @default(false)
+  vatRate       Float         @default(20)
+  status        InvoiceStatus @default(PENDING) 
+  totalAmount   Float         @default(0)  
 
-// model InvoiceLine {
-//   id          String   @id @default(uuid())
-//   description String   @default("")
-//   quantity    Int      @default(1) // Par défaut, une quantité de 1
-//   unitPrice   Float    @default(0)
-//   totalPrice  Float    @default(0) // Ajout d'un champ calculé pour éviter les recalculs
+  lines         InvoiceLine[] @relation("InvoiceLines")
 
-//   // 🔹 Relation avec Invoice
-//   invoiceId   String?
-//   invoice     Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
+  userId        String
+  createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
 
-//   createdAt   DateTime  @default(now())
-//   updatedAt   DateTime  @updatedAt
-// }
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
 
-// model Invoice {
-//   id            String        @id @default(uuid()) // UUID automatique
-//   name          String
-//   issuerName    String        @default("")
-//   issuerAddress String        @default("")
-//   clientName    String        @default("")
-//   clientAddress String        @default("")
-//   invoiceDate   DateTime      @default(now()) // Utilisation de DateTime pour une meilleure gestion
-//   dueDate       DateTime
-//   vatActive     Boolean       @default(false)
-//   vatRate       Float         @default(20)
-//   status        InvoiceStatus @default(PENDING) // Enum pour le statut
-//   totalAmount   Float         @default(0)       // Champ calculé pour éviter les recalculs fréquents
+// 🔹 Modèle des Lignes de Facture
+model InvoiceLine {
+  id          String   @id @default(uuid())
+  description String   @default("")
+  quantity    Int      @default(1) // Quantité par défaut : 1
+  unitPrice   Float    @default(0)
+  totalPrice  Float    @default(0) // Champ calculé pour éviter les recalculs
 
-//   // 🔹 Relation avec InvoiceLine
-//   lines         InvoiceLine[] @relation("InvoiceLines")
+  invoiceId   String?
+  invoice     Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
 
-//   // 🔹 Relation avec l'utilisateur
-//   userId        String
-//   createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
-
-//   // 🔹 Ajout des timestamps pour un meilleur suivi
-//   createdAt     DateTime      @default(now())
-//   updatedAt     DateTime      @updatedAt
-// }
-
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
