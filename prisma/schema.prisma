@@ -97,7 +97,7 @@ model Invoice {
 
   // 🔹 Dates clés de la facture
   invoiceDate DateTime @default(now())
-  dueDate     DateTime
+  dueDate     DateTime?
 
   // 🔹 TVA et statut de la facture
   vatActive Boolean       @default(false)

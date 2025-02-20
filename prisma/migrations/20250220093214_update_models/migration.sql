@@ -10,7 +10,7 @@ CREATE TABLE "Invoice" (
     "clientName" TEXT,
     "clientAddress" TEXT,
     "invoiceDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "dueDate" TIMESTAMP(3) NOT NULL,
+    "dueDate" TIMESTAMP(3),
     "vatActive" BOOLEAN NOT NULL DEFAULT false,
     "vatRate" DOUBLE PRECISION NOT NULL DEFAULT 20,
     "status" "InvoiceStatus" NOT NULL DEFAULT 'PENDING',
