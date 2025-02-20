@@ -79,8 +79,8 @@ export default function Facturation() {
                                         )}
                                     />
 
-                                    <div className="my-4">
-                                        <Button type='submit' size={"sm"} className="col-span-2 w-full rounded-sm">
+                                    <div className="mt-4">
+                                        <Button type='submit' size={"sm"} className="col-span-2 w-full rounded-sm bg-blue-950">
                                             Créer la facture
                                         </Button>
                                     </div>
