@@ -33,6 +33,7 @@ export default function Facturation() {
     const handleSubmit = async (data: z.infer<typeof FacturationSchema>) => {
         try {
             await createFacture(email, data)
+            form.reset()
 
         } catch (error) {
             console.error(error)
