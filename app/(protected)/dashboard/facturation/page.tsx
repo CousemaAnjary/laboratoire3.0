@@ -70,7 +70,7 @@ export default function Facturation() {
                                                 <FormControl>
                                                     <Input {...field}
                                                         type="text"
-                                                        placeholder="Nom de la facture (max 60 caractères)"
+                                                        placeholder="Nom de la facture (max 40 caractères)"
                                                         autoFocus
                                                         className="mb-4"
                                                     />
