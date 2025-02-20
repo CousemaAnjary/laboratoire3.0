@@ -86,9 +86,8 @@ enum InvoiceStatus {
 
 // 🔹 Modèle des Factures
 model Invoice {
-  id            String @id @default(uuid())
-  invoiceNumber String @unique 
-  
+  id String @id
+
   // 🔹 Informations générales sur la facture
   name          String
   issuerName    String?
