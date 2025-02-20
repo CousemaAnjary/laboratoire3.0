@@ -8,12 +8,18 @@ import { FacturationSchema } from "@/src/lib/schemas/facturation"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/components/ui/form"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
+import { createFacture } from "@/app/server/facturation/facturation.actions"
+import { z } from "zod"
+import { useSession } from "next-auth/react"
 
 
 export default function Facturation() {
     /**
      * ! STATE (état, données) de l'application
      */
+    const { data: session } = useSession()
+    const email = session?.user?.email as string
+
     const form = useForm({
         resolver: zodResolver(FacturationSchema),
         defaultValues: {
@@ -24,8 +30,13 @@ export default function Facturation() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const handleSubmit = () => {
-        console.log('submit')
+    const handleSubmit = async (data: z.infer<typeof FacturationSchema>) => {
+        try {
+            await createFacture(email, data)
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
