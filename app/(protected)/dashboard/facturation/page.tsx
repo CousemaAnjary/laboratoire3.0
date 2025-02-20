@@ -1,4 +1,4 @@
-import { Layers } from "lucide-react";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
 
 export default function Facturation() {
     /**
@@ -21,16 +21,12 @@ export default function Facturation() {
             </div>
 
             <div className=" grid gap-4 md:grid-cols-3">
-                <div
-                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border p-5 transition-all duration-300 hover:bg-gray-100 hover:shadow-lg"
-                    role="button"
-                    aria-label="Créer une facture"
-                >
-                    <div className="font-bold text-gray-800">Créer une facture</div>
-                    <div className="mt-3 flex items-center justify-center rounded-full bg-gray-200 p-3 transition-all duration-300 hover:bg-gray-300">
-                        <Layers className="size-6 text-gray-700" />
-                    </div>
-                </div>
+                <Card className="rounded-sm shadow-sm">
+                    <CardHeader>
+                        <CardTitle className="font-inter font-medium">Créer une facture</CardTitle>
+                        <CardDescription className="font-spaceGrotesk">Créer une nouvelle facture pour un client</CardDescription>
+                    </CardHeader>
+                </Card>
 
                 {/* Liste des factures */}
 
