@@ -76,8 +76,6 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-// 📌 Modèles pour la Facturation
-
 //🔹 Enum pour les statuts des factures
 enum InvoiceStatus {
   PENDING // En attente
@@ -88,39 +86,55 @@ enum InvoiceStatus {
 
 // 🔹 Modèle des Factures
 model Invoice {
-  id            String        @id @default(uuid()) 
+  id String @id @default(uuid())
+
+  // 🔹 Informations générales sur la facture
   name          String
-  issuerName    String        @default("")
-  issuerAddress String        @default("")
-  clientName    String        @default("")
-  clientAddress String        @default("")
-  invoiceDate   DateTime      @default(now())
-  dueDate       DateTime
-  vatActive     Boolean       @default(false)
-  vatRate       Float         @default(20)
-  status        InvoiceStatus @default(PENDING) 
-  totalAmount   Float         @default(0)  
+  issuerName    String?
+  issuerAddress String?
+  clientName    String?
+  clientAddress String?
 
-  lines         InvoiceLine[] @relation("InvoiceLines")
+  // 🔹 Dates clés de la facture
+  invoiceDate DateTime @default(now())
+  dueDate     DateTime
 
-  userId        String
-  createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
+  // 🔹 TVA et statut de la facture
+  vatActive Boolean       @default(false)
+  vatRate   Float         @default(20)
+  status    InvoiceStatus @default(PENDING)
 
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  // 🔹 Montant total de la facture
+  totalAmount Float @default(0)
+
+  // 🔹 Relation avec les lignes de facturation
+  lines InvoiceLine[] @relation("InvoiceLines")
+
+  // 🔹 Relation avec l'utilisateur qui a créé la facture
+  userId      String
+  createdById User   @relation("UserInvoices", fields: [userId], references: [id])
+
+  // 🔹 Timestamps pour le suivi
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// 🔹 Modèle des Lignes de Facture
 model InvoiceLine {
-  id          String   @id @default(uuid())
-  description String   @default("")
-  quantity    Int      @default(1) // Quantité par défaut : 1
-  unitPrice   Float    @default(0)
-  totalPrice  Float    @default(0) // Champ calculé pour éviter les recalculs
+  id String @id @default(uuid())
 
-  invoiceId   String?
-  invoice     Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
+  // 🔹 Description de l'article ou du service facturé
+  description String?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  // 🔹 Détails de la quantité et des prix
+  quantity   Int   @default(1) // Quantité par défaut : 1
+  unitPrice  Float @default(0) // Prix unitaire
+  totalPrice Float @default(0) // Prix total (calculé)
+
+  // 🔹 Relation avec la facture associée
+  invoiceId String?
+  invoice   Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  // 🔹 Timestamps pour le suivi des modifications
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

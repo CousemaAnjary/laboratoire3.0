@@ -5,10 +5,10 @@ CREATE TYPE "InvoiceStatus" AS ENUM ('PENDING', 'PAID', 'OVERDUE', 'CANCELLED');
 CREATE TABLE "Invoice" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "issuerName" TEXT NOT NULL DEFAULT '',
-    "issuerAddress" TEXT NOT NULL DEFAULT '',
-    "clientName" TEXT NOT NULL DEFAULT '',
-    "clientAddress" TEXT NOT NULL DEFAULT '',
+    "issuerName" TEXT,
+    "issuerAddress" TEXT,
+    "clientName" TEXT,
+    "clientAddress" TEXT,
     "invoiceDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dueDate" TIMESTAMP(3) NOT NULL,
     "vatActive" BOOLEAN NOT NULL DEFAULT false,
@@ -25,7 +25,7 @@ CREATE TABLE "Invoice" (
 -- CreateTable
 CREATE TABLE "InvoiceLine" (
     "id" TEXT NOT NULL,
-    "description" TEXT NOT NULL DEFAULT '',
+    "description" TEXT,
     "quantity" INTEGER NOT NULL DEFAULT 1,
     "unitPrice" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "totalPrice" DOUBLE PRECISION NOT NULL DEFAULT 0,
