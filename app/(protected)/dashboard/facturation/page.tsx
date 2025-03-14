@@ -3,12 +3,10 @@
 import { z } from "zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
 import { Input } from "@/src/components/ui/input"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FacturationSchema } from "@/src/lib/schemas/facturation"
-import { createFacture } from "@/app/server/facturation/facturation.actions"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/components/ui/form"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
@@ -19,9 +17,6 @@ export default function Facturation() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const { data: session } = useSession()
-    const email = session?.user?.email as string
-
     const [isOpen, setIsOpen] = useState(false)
 
 
@@ -36,16 +31,7 @@ export default function Facturation() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleSubmit = async (data: z.infer<typeof FacturationSchema>) => {
-        try {
-            const response = await createFacture(email, data);
-            if (!response || !response.success) {
-                throw new Error(response?.error || "Une erreur est survenue");
-            }
-            form.reset()
-            setIsOpen(false);
-        } catch (error) {
-            console.error(error)
-        }
+        console.log(data)
     }
 
 
