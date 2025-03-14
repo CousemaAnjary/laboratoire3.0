@@ -1,30 +1,33 @@
 "use client"
+
 import { useState } from "react"
 import { Button } from "../ui/button"
 import { Loader } from "lucide-react"
-// import { signIn } from "next-auth/react"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
-// import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
+import { authClient } from "@/src/lib/auth-client"
+
+//  Définir le type strict pour les providers autorisés
+type AuthProvider = "github" | "google" | "apple" | "discord" | "facebook" | "microsoft" | "spotify" | "twitch" | "twitter" | "dropbox" | "linkedin" | "gitlab" | "tiktok" | "reddit" | "roblox" | "vk" | "kick";
 
 
 export default function Social() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const [loadingProvider, setLoadingProvider] = useState<string | null>(null)
+    const [loadingProvider, setLoadingProvider] = useState<AuthProvider | null>(null);
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const handleProviderLogin = async (provider: string) => {
+    const handleProviderLogin = async (provider: AuthProvider) => {
         setLoadingProvider(provider)
 
         try {
-            // await signIn(provider, {
-            //     redirect: true,
-            //     callbackUrl: DEFAULT_LOGIN_REDIRECT
-            // })
+            await authClient.signIn.social({
+                provider,
+                callbackURL: "/dashboard",
+            })
 
         } catch (error) {
             console.error("Erreur lors de la connexion avec le fournisseur :", error)
