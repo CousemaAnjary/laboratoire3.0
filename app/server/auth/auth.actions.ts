@@ -30,15 +30,11 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         const hashedPassword = await bcrypt.hash(password, 10)
 
         // Concatenation des champs firstname et lastname pour le champ name
-        const fullName = `${lastname} ${firstname}`
+        const fullName = `${lastname} ${firstname}`.trim()
 
         // Création de l'utilisateur
-        await auth.api.signUpEmail({
-            body: {
-                name: fullName,
-                email,
-                password: hashedPassword
-            },
+      await auth.api.signUpEmail({
+            body: { email, password: hashedPassword, name: fullName },
         })
 
 
