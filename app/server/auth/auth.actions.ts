@@ -34,8 +34,11 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
 
         // Création de l'utilisateur
         await auth.api.signUpEmail({
-            body: { email, password: hashedPassword, name: fullName },
-            asResponse: true
+            body: {
+                name: fullName,
+                email,
+                password: hashedPassword
+            },
         })
 
 
