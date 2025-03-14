@@ -62,14 +62,17 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         const { email, password } = validated.data;
 
         // Vérifier si l'utilisateur existe dans la base de données
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await prisma.user.findUnique({
+            where: { email },
+            include: { accounts: true },
+        })
 
         if (!user) {
             return { success: false, error: "Aucun compte n'est associé à cette adresse e-mail" };
         }
 
         // Vérifier le mot de passe
-        const isPasswordValid = await bcrypt.compare(password, user.password || "");
+        const isPasswordValid = await bcrypt.compare(password, user.accounts[0]?.password || "");
 
         if (!isPasswordValid) {
             return { success: false, error: "Le mot de passe saisi est incorrect. Veuillez réessayer." };
