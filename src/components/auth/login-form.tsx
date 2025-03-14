@@ -12,9 +12,10 @@ import { useState, useTransition } from "react"
 import { LoginSchema } from "@/src/lib/schemas/auth"
 // import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
-// import { login } from "@/app/server/auth/auth.actions"
+import { login } from "@/app/server/auth/auth.actions"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+
 // import { useSession } from "next-auth/react"
 
 
@@ -45,7 +46,7 @@ export default function LoginForm() {
         setLoading(true)
 
         try {
-            // const response = await login(data)
+            const response = await login(data)
 
             // if (!response.success) {
             //     toast.error(response.error)

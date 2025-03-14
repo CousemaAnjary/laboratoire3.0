@@ -2,23 +2,32 @@
 
 import Link from "next/link"
 import { Button } from "../ui/button"
-// import { signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { authClient } from "@/src/lib/auth-client"
 import { LogOut, Settings, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 
 export default function UserDropdownMenu() {
     /**
      * ! STATE (état, données) de l'application
      */
-    // const { data: session } = useSession()
+    const router = useRouter()
+    const {data: session} = authClient.useSession()
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-
+    const signOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/login")
+                },
+            },
+        })
+    }
 
     /**
      * ! AFFICHAGE (render) de l'application
@@ -32,7 +41,7 @@ export default function UserDropdownMenu() {
                 >
                     <Avatar className="size-8">
                         <AvatarImage
-                            // src={session?.user?.image ?? undefined}
+                            src={session?.user?.image ?? undefined}
                             alt="@shadcn" />
                         <AvatarFallback className="bg-transparent">JD</AvatarFallback>
                     </Avatar>
@@ -44,7 +53,7 @@ export default function UserDropdownMenu() {
                     <div className="flex flex-col space-y-1">
                         <p className="mb-1 font-inter text-sm font-medium leading-none">{session?.user?.name}</p>
                         <p className="font-inter text-xs leading-none text-muted-foreground">
-                            {/* {session?.user?.email} */}
+                            {session?.user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -64,10 +73,10 @@ export default function UserDropdownMenu() {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                {/* <DropdownMenuItem className="font-inter hover:cursor-pointer" onClick={() => signOut()}>
+                <DropdownMenuItem className="font-inter hover:cursor-pointer" onClick={() => signOut()}>
                     <LogOut className="mr-3 size-4 text-red-600" />
                     Déconnexion
-                </DropdownMenuItem> */}
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
