@@ -31,6 +31,17 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
@@ -45,7 +56,15 @@ model Session {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+
   @@map("sessions")
+  @@unique([token])
 }
 
 // 📌 Modèle des Utilisateurs
@@ -61,6 +80,9 @@ model User {
   accounts Account[]
   sessions Session[]
 
+  createdAt DateTime
+  updatedAt DateTime
+
   @@map("users")
 }
 
@@ -73,4 +95,15 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
 }
