@@ -41,12 +41,12 @@ export default function Social() {
      * ! AFFICHAGE (render) de l'application
      */
     return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid  gap-2">
             {/* Bouton Google */}
             <Button
                 type="button"
                 variant="outline"
-                className="flex w-full items-center justify-center gap-2 font-inter"
+                className="flex w-full items-center justify-center gap-2 font-inter shadow-sm"
                 onClick={() => handleProviderLogin("google")}
                 disabled={loadingProvider === "google"}
             >
@@ -58,7 +58,7 @@ export default function Social() {
                 ) : (
                     <>
                         <FcGoogle size={18} />
-                        Google
+                        Continue avec Google
                     </>
                 )}
             </Button>
@@ -67,7 +67,7 @@ export default function Social() {
             <Button
                 type="button"
                 variant="outline"
-                className="flex w-full items-center justify-center gap-2 font-inter"
+                className="flex w-full items-center justify-center gap-2 font-inter shadow-sm"
                 onClick={() => handleProviderLogin("github")}
                 disabled={loadingProvider === "github"}
             >
@@ -79,7 +79,7 @@ export default function Social() {
                 ) : (
                     <>
                         <FaGithub size={18} />
-                        GitHub
+                        Continue avec GitHub
                     </>
                 )}
             </Button>
