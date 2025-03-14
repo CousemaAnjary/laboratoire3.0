@@ -1,7 +1,6 @@
 "use server"
 
 import { z } from "zod"
-import bcrypt from 'bcryptjs'
 import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
 import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
@@ -26,15 +25,12 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
             return { success: false, error: "Un compte existe déjà avec cette adresse e-mail" }
         }
 
-        // Hachage du mot de passe
-        const hashedPassword = await bcrypt.hash(password, 10)
-
         // Concatenation des champs firstname et lastname pour le champ name
         const fullName = `${lastname} ${firstname}`.trim()
 
         // Création de l'utilisateur
         await auth.api.signUpEmail({
-            body: { email, password: hashedPassword, name: fullName },
+            body: { email, password, name: fullName },
         })
 
 
@@ -72,16 +68,15 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         }
 
         // Vérifier le mot de passe
-        const isPasswordValid = await bcrypt.compare(password, user.accounts[0]?.password || "");
-
-        if (!isPasswordValid) {
-            return { success: false, error: "Le mot de passe saisi est incorrect. Veuillez réessayer." };
+        if (password !== user.accounts[0].password) {
+            return { success: false, error: "Le mot de passe saisi est incorrect. Veuillez réessayer" };
         }
 
-        // Authentification via BetterAuth
+        // Better Auth gérer la vérification du mot de passe
         await auth.api.signInEmail({
             body: { email, password },
-        })
+        });
+
 
         return { success: true, message: "Connexion réussie" };
 
