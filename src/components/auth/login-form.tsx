@@ -132,7 +132,7 @@ export default function LoginForm() {
                         </div>
 
                         <div className="grid">
-                            <Button type="submit" className="w-full font-inter" disabled={loading}>
+                            <Button type="submit" className="w-full bg-blue-900 font-inter hover:bg-blue-950" disabled={loading}>
                                 {loading || isPending ? (
                                     <>
                                         <Loader className="mr-2 size-4 animate-spin" />
