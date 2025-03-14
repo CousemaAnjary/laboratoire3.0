@@ -41,7 +41,7 @@ export default function Social() {
      * ! AFFICHAGE (render) de l'application
      */
     return (
-        <div className="grid  gap-2">
+        <div className="grid grid-cols-2  gap-2">
             {/* Bouton Google */}
             <Button
                 type="button"
@@ -58,7 +58,7 @@ export default function Social() {
                 ) : (
                     <>
                         <FcGoogle size={18} />
-                        Continue avec Google
+                        Google
                     </>
                 )}
             </Button>
@@ -79,7 +79,7 @@ export default function Social() {
                 ) : (
                     <>
                         <FaGithub size={18} />
-                        Continue avec GitHub
+                         GitHub
                     </>
                 )}
             </Button>
