@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +14,6 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
-  password      String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
@@ -50,6 +50,7 @@ model Account {
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
   scope                 String?
+  password              String?
   createdAt             DateTime
   updatedAt             DateTime
 
