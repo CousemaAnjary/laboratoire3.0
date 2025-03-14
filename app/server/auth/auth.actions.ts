@@ -72,11 +72,10 @@ export async function login(data: z.infer<typeof LoginSchema>) {
             body: { email, password },
         });
 
-
         return { success: true, message: "Connexion réussie" };
 
     } catch (error) {
         console.error("Erreur lors de la connexion :", error);
-        return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
+        return { success: false, error: "Le mot de passe est incorrect. Veuillez réessayer." };
     }
 }
