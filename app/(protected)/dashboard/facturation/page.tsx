@@ -12,7 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/src/compone
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/src/components/ui/dialog"
 
 
-
 export default function Facturation() {
     /**
      * ! STATE (état, données) de l'application
