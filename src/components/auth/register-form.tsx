@@ -155,7 +155,7 @@ export default function RegisterForm() {
                                     name="image"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-inter">Image</FormLabel>
+                                            <FormLabel className="font-inter">Image (optional)</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="file"
