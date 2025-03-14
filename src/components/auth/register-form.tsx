@@ -171,7 +171,7 @@ export default function RegisterForm() {
                             </div> */}
 
                             <div className="grid">
-                                <Button type="submit" className="w-full bg-blue-900 font-spaceGrotesk font-medium hover:bg-blue-950" disabled={loading}>
+                                <Button type="submit" className="w-full bg-blue-900 font-spaceGrotesk font-medium hover:bg-blue-950 dark:bg-white" disabled={loading}>
                                     {loading ? (
                                         <>
                                             <Loader className="mr-2 size-4 animate-spin" />
