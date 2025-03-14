@@ -6,6 +6,7 @@ import Social from "./social"
 import { toast } from "sonner"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
+import { Checkbox } from "../ui/checkbox"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
@@ -22,7 +23,7 @@ export default function LoginForm() {
      */
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const [isPending, startTransition] = useTransition();
+    const [isPending, startTransition] = useTransition()
     const [showPassword, setShowPassword] = useState(false)
 
 
@@ -31,6 +32,7 @@ export default function LoginForm() {
         defaultValues: {
             email: "",
             password: "",
+            rememberMe: false
         }
     })
 
@@ -129,6 +131,25 @@ export default function LoginForm() {
                                     {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                                 </Button>
                             </div>
+                        </div>
+                        <div className=" grid gap-2">
+                            <FormField
+                                control={form.control}
+                                name="rememberMe"
+                                render={({ field }) => (
+                                    <FormItem className="flex items-center space-x-2">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <FormLabel className="font-inter text-sm">
+                                            Se souvenir de moi
+                                        </FormLabel>
+                                    </FormItem>
+                                )}
+                            />
                         </div>
 
                         <div className="grid">
