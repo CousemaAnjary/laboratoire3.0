@@ -60,17 +60,12 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         // Vérifier si l'utilisateur existe dans la base de données
         const user = await prisma.user.findUnique({
             where: { email },
-            include: { accounts: true },
         })
 
         if (!user) {
             return { success: false, error: "Aucun compte n'est associé à cette adresse e-mail" };
         }
 
-        // Vérifier le mot de passe
-        if (password !== user.accounts[0].password) {
-            return { success: false, error: "Le mot de passe saisi est incorrect. Veuillez réessayer" };
-        }
 
         // Better Auth gérer la vérification du mot de passe
         await auth.api.signInEmail({
