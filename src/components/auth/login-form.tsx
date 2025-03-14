@@ -10,22 +10,22 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { LoginSchema } from "@/src/lib/schemas/auth"
-import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
+// import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { login } from "@/app/server/auth/auth.actions"
+// import { login } from "@/app/server/auth/auth.actions"
 import { AtSign, Eye, EyeOff, Loader, LockKeyhole } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 
 
 export default function LoginForm() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const router = useRouter()
-    const { update } = useSession()
+    // const router = useRouter()
+    // const { update } = useSession()
     const [loading, setLoading] = useState(false)
-    const [isPending, startTransition] = useTransition()
+    // const [isPending, startTransition] = useTransition()
     const [showPassword, setShowPassword] = useState(false)
 
 
@@ -45,20 +45,20 @@ export default function LoginForm() {
         setLoading(true)
 
         try {
-            const response = await login(data)
+            // const response = await login(data)
 
-            if (!response.success) {
-                toast.error(response.error)
-                return
-            }
+            // if (!response.success) {
+            //     toast.error(response.error)
+            //     return
+            // }
 
             //  Met à jour la session immédiatement après la connexion
-            await update()
+            // await update()
 
             //  Rafraîchir la session et rediriger sans bloquer l'UI
-            startTransition(() => {
-                router.replace(DEFAULT_LOGIN_REDIRECT)
-            })
+            // startTransition(() => {
+            //     router.replace(DEFAULT_LOGIN_REDIRECT)
+            // })
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
@@ -139,7 +139,7 @@ export default function LoginForm() {
 
                         <div className="grid">
                             <Button type="submit" className="w-full font-inter" disabled={loading}>
-                                {loading || isPending ? (
+                                {loading ? (
                                     <>
                                         <Loader className="mr-2 size-4 animate-spin" />
                                         Veuillez patienter

@@ -12,7 +12,7 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-import { register } from "@/app/server/auth/auth.actions"
+// import { register } from "@/app/server/auth/auth.actions"
 
 
 export default function RegisterForm() {

@@ -2,10 +2,10 @@
 import { useState } from "react"
 import { Button } from "../ui/button"
 import { Loader } from "lucide-react"
-import { signIn } from "next-auth/react"
+// import { signIn } from "next-auth/react"
 import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
-import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
+// import { DEFAULT_LOGIN_REDIRECT } from "@/middleware"
 
 
 export default function Social() {
@@ -21,10 +21,10 @@ export default function Social() {
         setLoadingProvider(provider)
 
         try {
-            await signIn(provider, {
-                redirect: true,
-                callbackUrl: DEFAULT_LOGIN_REDIRECT
-            })
+            // await signIn(provider, {
+            //     redirect: true,
+            //     callbackUrl: DEFAULT_LOGIN_REDIRECT
+            // })
 
         } catch (error) {
             console.error("Erreur lors de la connexion avec le fournisseur :", error)
