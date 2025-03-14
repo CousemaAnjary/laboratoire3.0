@@ -86,7 +86,7 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         await auth.api.signInEmail({
             body: { email, password },
             asResponse: true, // Retourne un objet de réponse
-        });
+        })
 
         return { success: true, message: "Connexion réussie"};
 
