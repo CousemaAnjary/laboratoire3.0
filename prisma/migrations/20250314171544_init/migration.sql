@@ -5,6 +5,7 @@ CREATE TABLE "user" (
     "email" TEXT NOT NULL,
     "emailVerified" BOOLEAN NOT NULL,
     "image" TEXT,
+    "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -37,7 +38,6 @@ CREATE TABLE "account" (
     "accessTokenExpiresAt" TIMESTAMP(3),
     "refreshTokenExpiresAt" TIMESTAMP(3),
     "scope" TEXT,
-    "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
