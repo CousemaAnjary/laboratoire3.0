@@ -13,7 +13,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         const validated = RegisterSchema.safeParse(data)
 
         if (!validated.success) {
-            throw new Error("Données invalides: " + validated.error.format())
+            return { success: false, error: "Données invalides", details: validated.error.format() }
         }
 
         // Vérifier si l'email existe déjà
@@ -22,7 +22,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         })
 
         if (existingUser) {
-            throw new Error("L'adresse e-mail fournie est déjà associée à un compte existant.")
+            return { success: false, error: "Un compte existe déjà avec cette adresse e-mail" }
         }
 
         // Hachage du mot de passe
@@ -32,26 +32,20 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         const fullName = `${validated.data.firstname} ${validated.data.lastname}`
 
         // Création de l'utilisateur
-        const user = await prisma.user.create({
-            data: {
-                name: fullName,
+        const user = await auth.api.signUpEmail({
+            body: {
                 email: validated.data.email,
                 password: hashedPassword,
-            }
+                name: fullName,
+            },
         })
 
         // Retourner l'utilisateur créé avec un message de succès
-        return {
-            user,
-            success: true,
-            message: "Utilisateur enregistré avec succès",
-        }
+        return { success: true, message: "Inscription réussie", user }
 
     } catch (error) {
-        return {
-            success: false,
-            error: error instanceof Error ? error.message : "Erreur interne du serveur",
-        }
+        console.error("Erreur lors de l'inscription :", error)
+        return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." }
     }
 }
 
@@ -85,10 +79,9 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         // Authentification via BetterAuth
         await auth.api.signInEmail({
             body: { email, password },
-            asResponse: true, // Retourne un objet de réponse
         })
 
-        return { success: true, message: "Connexion réussie"};
+        return { success: true, message: "Connexion réussie" };
 
     } catch (error) {
         console.error("Erreur lors de la connexion :", error);
