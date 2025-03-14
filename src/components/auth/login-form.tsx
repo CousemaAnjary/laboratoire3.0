@@ -51,8 +51,8 @@ export default function LoginForm() {
 
             //  Rafraîchir la session et rediriger sans bloquer l'UI
             startTransition(() => {
-                router.replace("/dashboard"); // Remplace avec ta route par défaut
-            });
+                router.replace("/dashboard") // Remplace avec ta route par défaut
+            })
 
         } catch (error) {
             console.error("Erreur lors de la connexion :", error)
