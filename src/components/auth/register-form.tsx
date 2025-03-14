@@ -1,7 +1,6 @@
 "use client"
 import { z } from "zod"
 import Link from "next/link"
-import Social from "./social"
 import { toast } from "sonner"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -183,13 +182,13 @@ export default function RegisterForm() {
                                 </Button>
                             </div>
 
-                            <div className="relative">
+                            {/* <div className="relative">
                                 <div className="relative flex justify-center text-xs uppercase">
                                     <span className="bg-background px-2 font-inter text-muted-foreground">Ou continuer avec</span>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <Social />
+                            {/* <Social /> */}
                         </div>
                     </form>
 
