@@ -16,9 +16,11 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
             return { success: false, error: "Données invalides", details: validated.error.format() }
         }
 
+        const { email, password, lastname, firstname } = validated.data
+
         // Vérifier si l'email existe déjà
         const existingUser = await prisma.user.findUnique({
-            where: { email: validated.data.email },
+            where: { email },
         })
 
         if (existingUser) {
@@ -26,22 +28,19 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         }
 
         // Hachage du mot de passe
-        const hashedPassword = await bcrypt.hash(validated.data.password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         // Concatenation des champs firstname et lastname pour le champ name
-        const fullName = `${validated.data.firstname} ${validated.data.lastname}`
+        const fullName = `${lastname} ${firstname}`
 
         // Création de l'utilisateur
-        const user = await auth.api.signUpEmail({
-            body: {
-                email: validated.data.email,
-                password: hashedPassword,
-                name: fullName,
-            },
+        await auth.api.signUpEmail({
+            body: { email, password: hashedPassword, name: fullName },
+
         })
 
         // Retourner l'utilisateur créé avec un message de succès
-        return { success: true, message: "Inscription réussie", user }
+        return { success: true, message: "Inscription réussie" }
 
     } catch (error) {
         console.error("Erreur lors de l'inscription :", error)
