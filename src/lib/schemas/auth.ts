@@ -33,3 +33,8 @@ export const RegisterSchema = z.object({
     message: "Les mots de passe ne correspondent pas",
     path: ["confirmPassword"]
 })   
+
+
+export const ForgotPasswordSchema = z.object({
+    email: z.string().email("L'adresse email est invalide"),
+})
