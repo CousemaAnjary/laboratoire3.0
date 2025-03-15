@@ -1,35 +1,54 @@
 "use client"
 
 import { z } from "zod"
+import { toast } from "sonner"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Eye, EyeOff } from "lucide-react"
 import { Input } from "@/src/components/ui/input"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter, useSearchParams } from "next/navigation"
 import { ResetPasswordSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { auth } from "@/src/lib/auth"
+
 
 
 export default function ResetPassword() {
     /**
      * ! STATE (état, données) de l'application
      */
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const token = searchParams.get("token")
     const [showPassword, setShowPassword] = useState(false)
 
     const form = useForm<z.infer<typeof ResetPasswordSchema>>({
         resolver: zodResolver(ResetPasswordSchema),
         defaultValues: {
-            password: "",
-            confirmPassword: ""
+            newPassword: "",
+            confirmNewPassword: ""
         },
     });
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const handleResetPassword = async () => {
-        console.log("Reset password")
+    const handleResetPassword = async (data:z.infer<typeof ResetPasswordSchema>) => {
+        if (!token) {
+            toast.error("Token invalide !")
+            return
+        }
+
+        try { 
+            await auth.api.resetPassword({ body: { token, newPassword: data.newPassword } });
+            toast.success("Mot de passe réinitialisé !")
+            router.push("/login")
+
+        } catch (error) {
+            console.error("Erreur lors de la réinitialisation du mot de passe :", error)
+        }
     }
 
     /**
@@ -47,7 +66,7 @@ export default function ResetPassword() {
                                 <div className="col-span-8 grid gap-2">
                                     <FormField
                                         control={form.control}
-                                        name="password"
+                                        name="newPassword"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="font-inter">Nouveau mot de passe</FormLabel>
@@ -68,7 +87,7 @@ export default function ResetPassword() {
                             <div className="grid gap-2">
                                 <FormField
                                     control={form.control}
-                                    name="confirmPassword"
+                                    name="confirmNewPassword"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="font-inter">Confirmez le nouveau mot de passe</FormLabel>
