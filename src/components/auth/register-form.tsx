@@ -148,6 +148,21 @@ export default function RegisterForm() {
                                 </div>
                             </div>
 
+                            <div className="grid gap-2">
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="font-inter">Confirmez le mot de passe</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre mot de passe" className="bg-white font-inter shadow-sm dark:bg-zinc-950" />
+                                            </FormControl>
+                                            <FormMessage className="font-inter" />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                             {/* <div className="grid gap-2">
                                 <FormField
                                     control={form.control}

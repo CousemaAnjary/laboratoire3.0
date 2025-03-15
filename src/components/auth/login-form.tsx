@@ -140,7 +140,7 @@ export default function LoginForm() {
                                     <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                         <FormControl>
                                             <Checkbox
-                                            className="data-[state=checked]:bg-blue-950 dark:data-[state=checked]:bg-white"
+                                            className="data-[state=checked]:bg-blue-900 dark:data-[state=checked]:bg-white"
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                             />
