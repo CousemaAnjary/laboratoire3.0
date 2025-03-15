@@ -1,5 +1,7 @@
 "use client"
 
+import { z } from "zod"
+import { toast } from "sonner"
 import { useForm } from "react-hook-form"
 import { Input } from "@/src/components/ui/input"
 import { Button } from "@/src/components/ui/button"
@@ -7,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ForgotPasswordSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem } from "@/src/components/ui/form"
 import { sendResetPasswordEmail } from "@/app/server/auth/auth.actions"
-import { toast } from "sonner"
 
 
 export default function ForgotPassword() {
@@ -15,7 +16,7 @@ export default function ForgotPassword() {
      * ! STATE (état, données) de l'application
      */
 
-    const form = useForm({
+    const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
         resolver: zodResolver(ForgotPasswordSchema),
         defaultValues: {
             email: ""
@@ -26,9 +27,9 @@ export default function ForgotPassword() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const handleForgotPassword = async (data: { email: string }) => {
+    const handleForgotPassword = async (data: z.infer<typeof ForgotPasswordSchema>) => {
         try {
-            const response = await sendResetPasswordEmail(data.email)
+            const response = await sendResetPasswordEmail(data)
 
             if (!response.success) {
                 toast.error(response.error)

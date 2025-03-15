@@ -3,7 +3,7 @@
 import { z } from "zod"
 import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
-import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
+import { ForgotPasswordSchema, LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
 // Enregistrement d'un nouvel utilisateur
 export async function register(data: z.infer<typeof RegisterSchema>) {
@@ -80,11 +80,22 @@ export async function login(data: z.infer<typeof LoginSchema>) {
     }
 }
 
-export async function sendResetPasswordEmail(email: string) {
+export async function sendResetPasswordEmail(data: z.infer<typeof ForgotPasswordSchema>) {
     try {
+        // Validation des données reçues via votre schéma (Zod)
+        const validated = ForgotPasswordSchema.safeParse(data)
+
+        if (!validated.success) {
+            return { success: false, error: "Données invalides", details: validated.error.format() }
+        }
+
+        // Extraire les données validées
+        const { email } = validated.data
+
+        // Envoi de l'email de réinitialisation
         await auth.api.forgetPassword({ body: { email } })
 
-        
+
         return { success: true, message: "Email de réinitialisation envoyé" };
 
 
