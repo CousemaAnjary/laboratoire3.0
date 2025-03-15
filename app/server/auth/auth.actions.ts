@@ -93,7 +93,7 @@ export async function sendResetPasswordEmail(data: z.infer<typeof ForgotPassword
         const { email } = validated.data
 
         // Envoi de l'email de réinitialisation
-        await auth.api.forgetPassword({ body: { email } })
+        await auth.api.forgetPassword({ body: { email, redirectTo: "/reset-password" } })
 
 
         return { success: true, message: "Email de réinitialisation envoyé" };
