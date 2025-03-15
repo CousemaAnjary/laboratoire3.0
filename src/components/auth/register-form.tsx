@@ -4,7 +4,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { Input } from "@/src/components/ui/input"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
@@ -18,7 +18,7 @@ export default function RegisterForm() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const router = useRouter()
+    // const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -51,7 +51,7 @@ export default function RegisterForm() {
                 if (response.message) {
                     localStorage.setItem("success", response.message)
                 }
-                router.push("/login")
+                // router.push("/login")
             }
 
         } catch (error) {
