@@ -1,9 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { getMenu } from "@/src/utils/menu"
 import { usePathname } from "next/navigation"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
-import Link from "next/link"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
+
 
 export default function DynamicBreadcrumb() {
 
@@ -43,10 +44,9 @@ export default function DynamicBreadcrumb() {
 
                         <BreadcrumbItem>
                             {activeSubmenu ? (
-
-                                <BreadcrumbLink href={activeMenu.href} className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800">
+                                <Link href={activeMenu.href} className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800">
                                     {activeMenu.label}
-                                </BreadcrumbLink>
+                                </Link>
 
                             ) : (
                                 <BreadcrumbPage className="font-spaceGrotesk text-xs font-medium text-gray-800">{activeMenu.label}</BreadcrumbPage>
