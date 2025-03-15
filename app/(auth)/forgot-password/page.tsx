@@ -30,18 +30,18 @@ export default function ForgotPassword() {
      */
     return (
         <>
-            <div className="w-full max-w-md p-8">
-                <h1 className="mb-4 text-2xl font-medium">Réinitialiser le mot de passe</h1>
-                <p className="mb-4 text-muted-foreground">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
+            <div className="relative w-full max-w-md p-8">
+                <h1 className="mb-4 font-spaceGrotesk text-2xl font-medium">Réinitialiser le mot de passe</h1>
+                <p className="mb-4 text-muted-foreground ">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
 
                 <form onSubmit={form.handleSubmit(handleForgotPassword)}>
                     <div className="grid gap-4">
                         <div>
                             <Input
                                 {...form.register("email")}
-                                placeholder="Votre email"
+                                placeholder="Entrez votre adresse email"
                                 type="email"
-                                className="bg-white font-inter shadow-sm"
+                                className="bg-white font-inter shadow-sm dark:bg-zinc-950"
                             />
                         </div>
 

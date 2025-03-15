@@ -69,10 +69,10 @@ export default function LoginForm() {
     return (
         <div className="relative w-full max-w-md p-8">
             <h1 className="mb-2 font-spaceGrotesk text-2xl font-medium ">Se connecter</h1>
-            <p className="mb-4">
+            <p className="mb-4 ">
                 Connectez-vous à votre compte pour accéder à votre espace personnel
             </p>
-            <p className="mb-4 font-spaceGrotesk  text-sm font-medium text-muted-foreground">
+            <p className="mb-4 font-spaceGrotesk  text-sm text-muted-foreground">
                 Vous n&apos;avez pas de compte ? Inscrivez-vous en cliquant <Link href="/register" className="text-cyan-700 underline">ici</Link>
             </p>
 
@@ -111,7 +111,7 @@ export default function LoginForm() {
                                         <FormItem >
                                             <div className="flex flex-row items-center justify-between space-y-0">
                                                 <FormLabel className="font-inter text-sm">Mot de passe</FormLabel>
-                                                <Link href="/forgot-password" className="font-inter text-sm text-muted-foreground hover:underline">
+                                                <Link href="/forgot-password" className="font-spaceGrotesk text-sm text-muted-foreground hover:underline">
                                                     Mot de passe oublié ?
                                                 </Link>
                                             </div>
