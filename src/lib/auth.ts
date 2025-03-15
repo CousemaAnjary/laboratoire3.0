@@ -5,7 +5,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma"
 
 
 export const auth = betterAuth({
-   
+
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
@@ -13,6 +13,13 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         autoSignIn: false,
+        sendResetPassword: async ({ user, url, token }, request) => {
+            await sendEmail({
+                to: user.email,
+                subject: "Réinitialisation du mot de passe",
+                text: `Cliquez sur le lien suivant pour réinitialiser votre mot de passe: ${url}`,
+            })
+        }
     },
 
     socialProviders: {

@@ -6,6 +6,8 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ForgotPasswordSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem } from "@/src/components/ui/form"
+import { sendResetPasswordEmail } from "@/app/server/auth/auth.actions"
+import { toast } from "sonner"
 
 
 export default function ForgotPassword() {
@@ -25,7 +27,19 @@ export default function ForgotPassword() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleForgotPassword = async (data: { email: string }) => {
-        console.log(data)
+        try {
+            const response = await sendResetPasswordEmail(data.email)
+
+            if (!response.success) {
+                toast.error(response.error)
+                return
+            }
+
+            toast.success("Un lien de réinitialisation a été envoyé à votre adresse email.")
+
+        } catch (error) {
+            console.error("Erreur lors de l'envoi du lien de réinitialisation :", error)
+        }
     }
 
     /**

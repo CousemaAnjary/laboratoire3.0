@@ -79,3 +79,19 @@ export async function login(data: z.infer<typeof LoginSchema>) {
         return { success: false, error: "Le mot de passe est incorrect. Veuillez réessayer." };
     }
 }
+
+export async function sendResetPasswordEmail(email: string) {
+    try {
+        await auth.api.forgetPassword({ body: { email } })
+
+        
+        return { success: true, message: "Email de réinitialisation envoyé" };
+
+
+    } catch (error) {
+        console.error("Erreur lors de l'envoi de l'email de réinitialisation :", error);
+        return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
+    }
+
+}
+
