@@ -38,7 +38,7 @@ export default function ResetPassword() {
     return (
         <>
             <div className="relative w-full max-w-md p-8">
-                <h1 className="mb-4 text-2xl font-medium">Nouveau mot de passe</h1>
+                <h1 className="mb-4 text-2xl font-medium ">Nouveau mot de passe</h1>
                 <p className="mb-4 text-muted-foreground">Saisissez un nouveau mot de passe sécurisé.</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleResetPassword)}>
@@ -52,7 +52,7 @@ export default function ResetPassword() {
                                             <FormItem>
                                                 <FormLabel className="font-inter">Nouveau mot de passe</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre mot de passe" className="bg-white font-inter shadow-sm dark:bg-zinc-950" />
+                                                    <Input {...field} type={showPassword ? "text" : "password"} placeholder="Entrez votre nouveau mot de passe" className="bg-white font-inter shadow-sm dark:bg-zinc-950" />
                                                 </FormControl>
                                                 <FormMessage className="font-inter" />
                                             </FormItem>
@@ -64,6 +64,21 @@ export default function ResetPassword() {
                                         {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                                     </Button>
                                 </div>
+                            </div>
+                            <div className="grid gap-2">
+                                <FormField
+                                    control={form.control}
+                                    name="confirmPassword"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="font-inter">Confirmez le nouveau mot de passe</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} type={showPassword ? "text" : "password"} placeholder="Retapez votre nouveau mot de passe" className="bg-white font-inter shadow-sm dark:bg-zinc-950" />
+                                            </FormControl>
+                                            <FormMessage className="font-inter" />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
 
                             <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-950">
