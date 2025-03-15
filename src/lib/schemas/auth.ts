@@ -11,6 +11,7 @@ export const RegisterSchema = z.object({
     firstname: z.string().nonempty("Le prénom est obligatoire"),
     email: z.string().email("L'adresse email est invalide"),
     password: z.string().min(8, "Le mot de passe doit contenir au moins 8 caractères"),
+    confirmPassword: z.string()
     // image: z
     //     // Vérifie que l’entrée est bien un fichier (File).
     //     .custom<File>((value) => value instanceof File, {
@@ -28,4 +29,7 @@ export const RegisterSchema = z.object({
     //     // }),
 
     //     .optional()
-})
+}).refine(data => data.password === data.confirmPassword, {
+    message: "Les mots de passe ne correspondent pas",
+    path: ["confirmPassword"]
+})   
