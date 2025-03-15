@@ -1,9 +1,9 @@
 import { prisma } from "./prisma"
-import { sendEmail } from "./email"
 import { betterAuth } from "better-auth"
+import { openAPI } from "better-auth/plugins"
 import { nextCookies } from "better-auth/next-js"
 import { prismaAdapter } from "better-auth/adapters/prisma"
-
+import { sendEmail } from "@/app/server/auth/email.actions"
 
 
 
@@ -15,12 +15,25 @@ export const auth = betterAuth({
 
     emailAndPassword: {
         enabled: true,
-        autoSignIn: false,
-        sendResetPassword: async ({ user, url }) => {
+        requireEmailVerification: true,
+        // sendResetPassword: async ({ user, url }) => {
+        //     await sendEmail({
+        //         to: user.email,
+        //         subject: "Réinitialisation du mot de passe",
+        //         text: `Cliquez sur le lien suivant pour réinitialiser votre mot de passe: ${url}`,
+        //     })
+        // }
+    },
+
+    emailVerification: {
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+        sendVerificationEmail: async ({ user, token }) => {
+            const verificationUrl = `${process.env.BETTER_AUTH_URL}/api/auth/verify-email?token=${token}&callbackURL=${process.env.EMAIL_VERIFICATION_CALLBACK_URL}`
             await sendEmail({
                 to: user.email,
-                subject: "Réinitialisation du mot de passe",
-                text: `Cliquez sur le lien suivant pour réinitialiser votre mot de passe: ${url}`,
+                subject: "Vérification de l'adresse email",
+                text: `Cliquez sur le lien suivant pour vérifier votre adresse email: ${verificationUrl}`,
             })
         }
     },
@@ -36,5 +49,8 @@ export const auth = betterAuth({
         },
     },
 
-    plugins: [nextCookies()]
+    plugins: [
+        openAPI(), // Expose an OpenAPI schema at /api/auth/reference
+        nextCookies(),
+    ]
 })
