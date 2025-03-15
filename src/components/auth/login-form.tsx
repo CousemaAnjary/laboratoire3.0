@@ -85,7 +85,7 @@ export default function LoginForm() {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="font-inter">Adresse email </FormLabel>
+                                        <FormLabel className="font-inter text-sm">Adresse email </FormLabel>
                                         <FormControl>
                                             {/* Conteneur pour l'input et l'icône */}
                                             <div className="relative ">
@@ -108,8 +108,13 @@ export default function LoginForm() {
                                     control={form.control}
                                     name="password"
                                     render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-inter">Mot de passe</FormLabel>
+                                        <FormItem >
+                                            <div className="flex flex-row items-center justify-between space-y-0">
+                                                <FormLabel className="font-inter text-sm">Mot de passe</FormLabel>
+                                                <Link href="/forgot-password" className="font-inter text-sm text-muted-foreground hover:underline">
+                                                    Mot de passe oublié ?
+                                                </Link>
+                                            </div>
                                             <FormControl>
                                                 {/* Conteneur pour l'input et l'icône */}
                                                 <div className="relative ">
@@ -119,7 +124,6 @@ export default function LoginForm() {
                                                         <LockKeyhole size={16} strokeWidth={2} aria-hidden="true" />
                                                     </div>
                                                 </div>
-
                                             </FormControl>
                                             <FormMessage className="font-inter" />
                                         </FormItem>
@@ -140,7 +144,7 @@ export default function LoginForm() {
                                     <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                         <FormControl>
                                             <Checkbox
-                                            className="data-[state=checked]:bg-blue-900 dark:data-[state=checked]:bg-white"
+                                                className="data-[state=checked]:bg-blue-900 dark:data-[state=checked]:bg-white"
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                             />
