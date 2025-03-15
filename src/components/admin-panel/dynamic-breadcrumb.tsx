@@ -3,7 +3,7 @@
 import { getMenu } from "@/src/utils/menu"
 import { usePathname } from "next/navigation"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
-
+import Link from "next/link"
 
 export default function DynamicBreadcrumb() {
 
@@ -32,9 +32,9 @@ export default function DynamicBreadcrumb() {
             <BreadcrumbList>
                 {/* Lien vers "Administration" (toujours affiché) */}
                 <BreadcrumbItem>
-                    <BreadcrumbLink href="/dashboard" className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800">
+                    <Link href="/dashboard" className="font-spaceGrotesk text-xs font-medium text-gray-600 hover:text-gray-800" >
                         Administration
-                    </BreadcrumbLink>
+                    </Link>
                 </BreadcrumbItem>
 
                 {activeMenu && (
