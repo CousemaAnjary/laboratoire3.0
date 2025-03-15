@@ -5,6 +5,7 @@ import { Input } from "@/src/components/ui/input"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ForgotPasswordSchema } from "@/src/lib/schemas/auth"
+import { Form, FormControl, FormField, FormItem } from "@/src/components/ui/form"
 
 
 export default function ForgotPassword() {
@@ -14,7 +15,9 @@ export default function ForgotPassword() {
 
     const form = useForm({
         resolver: zodResolver(ForgotPasswordSchema),
-        defaultValues: { email: "" },
+        defaultValues: {
+            email: ""
+        },
     });
 
 
@@ -30,26 +33,37 @@ export default function ForgotPassword() {
      */
     return (
         <>
-            <div className="relative w-full max-w-md p-8">
+            <div className="relative w-full max-w-md p-8 ">
                 <h1 className="mb-4 font-spaceGrotesk text-2xl font-medium">Réinitialiser le mot de passe</h1>
-                <p className="mb-4 text-muted-foreground ">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
+                <p className="mb-4 text-muted-foreground">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(handleForgotPassword)}>
+                        <div className="grid gap-4">
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <Input {...field}
+                                                    type="email"
+                                                    placeholder="Entrez votre adresse email"
+                                                    className="bg-white font-inter shadow-sm dark:bg-zinc-950"
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
-                <form onSubmit={form.handleSubmit(handleForgotPassword)}>
-                    <div className="grid gap-4">
-                        <div>
-                            <Input
-                                {...form.register("email")}
-                                placeholder="Entrez votre adresse email"
-                                type="email"
-                                className="bg-white font-inter shadow-sm dark:bg-zinc-950"
-                            />
+                            <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-950">
+                                Envoyer le lien de réinitialisation
+                            </Button>
                         </div>
+                    </form>
+                </Form>
 
-                        <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-950">
-                            Envoyer le lien de réinitialisation
-                        </Button>
-                    </div>
-                </form>
             </div>
         </>
     )
