@@ -3,7 +3,7 @@
 import Navbar from "@/src/components/admin-panel/navbar"
 import AppSidebar from "@/src/components/admin-panel/app-sidebar"
 import { SidebarInset, SidebarProvider } from "@/src/components/ui/sidebar"
-import { useSidebarStore } from "@/src/components/admin-panel/hooks/use-sidebar-toggle";
+import { useSidebarStore } from "@/src/components/admin-panel/hooks/use-sidebar-toggle"
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <AppSidebar  />
             <SidebarInset className="relative h-screen overflow-x-hidden bg-slate-50"> {/* Ajoutez overflow-x-hidden */}
                 <Navbar />
-                <main className="container py-8 sm:px-8"> {/* Ajoutez overflow-x-auto */}
+                <main className="py-8 sm:px-8"> {/* Ajoutez overflow-x-auto */}
                     {children}
                 </main>
             </SidebarInset>
