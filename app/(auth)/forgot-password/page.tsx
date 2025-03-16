@@ -1,14 +1,14 @@
 "use client"
 
 import { z } from "zod"
-import { toast } from "sonner"
+// import { toast } from "sonner"
 import { useForm } from "react-hook-form"
 import { Input } from "@/src/components/ui/input"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ForgotPasswordSchema } from "@/src/lib/schemas/auth"
 import { Form, FormControl, FormField, FormItem } from "@/src/components/ui/form"
-import { sendResetPasswordEmail } from "@/app/server/auth/auth.actions"
+// import { sendResetPasswordEmail } from "@/app/server/auth/auth.actions"
 
 
 export default function ForgotPassword() {
@@ -28,19 +28,20 @@ export default function ForgotPassword() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleForgotPassword = async (data: z.infer<typeof ForgotPasswordSchema>) => {
-        try {
-            const response = await sendResetPasswordEmail(data)
+        // try {
+        //     const response = await sendResetPasswordEmail(data)
 
-            if (!response.success) {
-                toast.error(response.error)
-                return
-            }
+        //     if (!response.success) {
+        //         toast.error(response.error)
+        //         return
+        //     }
 
-            toast.success("Un lien de réinitialisation a été envoyé à votre adresse email.")
+        //     toast.success("Un lien de réinitialisation a été envoyé à votre adresse email.")
 
-        } catch (error) {
-            console.error("Erreur lors de l'envoi du lien de réinitialisation :", error)
-        }
+        // } catch (error) {
+        //     console.error("Erreur lors de l'envoi du lien de réinitialisation :", error)
+        // }
+        console.log(data)
     }
 
     /**
