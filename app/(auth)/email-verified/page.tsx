@@ -2,11 +2,10 @@
 
 import { z } from "zod"
 import { toast } from "sonner"
-import { cookies } from "next/headers"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { authClient } from "@/src/lib/auth-client"
+// import { authClient } from "@/src/lib/auth-client"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
@@ -107,17 +106,17 @@ export default function EmailVerified() {
     const handleResendOtp = async () => {
         if (resendCooldown > 0) return
 
-        const cookieStore = await cookies()
-        const email = cookieStore.get("emailToVerify")?.value;
-        if (!email) {
-            toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
-            return
-        }
+        // const cookieStore = await cookies()
+        // const email = cookieStore.get("emailToVerify")?.value;
+        // if (!email) {
+        //     toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
+        //     return
+        // }
 
-        await authClient.emailOtp.sendVerificationOtp({
-            email,
-            type: "email-verification",
-        })
+        // await authClient.emailOtp.sendVerificationOtp({
+        //     email,
+        //     type: "email-verification",
+        // })
 
         toast.success("Un nouveau code a été envoyé.")
         setResendCooldown(RESEND_COOLDOWN_TIME)
