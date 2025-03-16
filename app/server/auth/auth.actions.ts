@@ -2,6 +2,7 @@
 
 import { z } from "zod"
 import { auth } from "@/src/lib/auth"
+import { cookies } from "next/headers"
 import { prisma } from "@/src/lib/prisma"
 import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
@@ -33,6 +34,10 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         await auth.api.signUpEmail({
             body: { email, password, name: fullName },
         })
+
+        //  Stocker l'email temporairement et rediriger vers `/verify-email`
+        const cookieStore = await cookies()
+        cookieStore.set("emailToVerify", email)
 
         // Retourner l'utilisateur créé avec un message de succès
         return { success: true, message: "Inscription réussie. Vérifiez votre email." }

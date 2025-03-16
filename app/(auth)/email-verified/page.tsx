@@ -2,6 +2,7 @@
 
 import { z } from "zod"
 import { toast } from "sonner"
+import { cookies } from "next/headers"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -13,7 +14,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } 
 
 
 const OTP_EXPIRATION_TIME = 600 // 10 minutes en secondes
-const RESEND_COOLDOWN_TIME = 30; // 30 secondes avant de renvoyer un OTP
+const RESEND_COOLDOWN_TIME = 30 // 30 secondes avant de renvoyer un OTP
 
 const FormSchema = z.object({
     pin: z.string().min(6, {
@@ -55,14 +56,14 @@ export default function EmailVerified() {
                 setTimeLeft((prev) => {
                     const newTime = prev - 1;
                     localStorage.setItem("otpExpiration", (Math.floor(Date.now() / 1000) + newTime).toString()); // ✅ Sauvegarde dynamique
-                    return newTime;
-                });
-            }, 1000);
-            return () => clearInterval(timer);
+                    return newTime
+                })
+            }, 1000)
+            return () => clearInterval(timer)
         } else {
-            toast.error("Le code OTP a expiré. Veuillez demander un nouveau code.");
+            toast.error("Le code OTP a expiré. Veuillez demander un nouveau code.")
         }
-    }, [timeLeft]);
+    }, [timeLeft])
 
 
     // Compter le temps restant pour le renvoi du code OTP
@@ -85,7 +86,9 @@ export default function EmailVerified() {
 
     // Vérifier le code OTP
     const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
-        const email = localStorage.getItem("emailToVerify")
+        const cookieStore = await cookies()
+        const email = cookieStore.get("emailToVerify")?.value;
+
 
         if (!email) {
             toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
@@ -107,8 +110,8 @@ export default function EmailVerified() {
             router.push("/dashboard")
 
             // Supprimer les données stockées après validation
-            localStorage.removeItem("emailToVerify");
-            localStorage.removeItem("otpExpiration");
+            localStorage.removeItem("emailToVerify")
+            localStorage.removeItem("otpExpiration")
 
         } catch (error) {
             console.error("Erreur lors de la vérification de l'adresse email :", error)

@@ -1,4 +1,5 @@
 "use client"
+
 import { z } from "zod"
 import Link from "next/link"
 import { toast } from "sonner"
@@ -6,14 +7,13 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { Input } from "@/src/components/ui/input"
+import { authClient } from "@/src/lib/auth-client"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
 import { register } from "@/app/server/auth/auth.actions"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
-import { authClient } from "@/src/lib/auth-client"
-
 
 
 export default function RegisterForm() {
@@ -54,11 +54,10 @@ export default function RegisterForm() {
             await authClient.emailOtp.sendVerificationOtp({
                 email: data.email,
                 type: "email-verification",
-            });
+            })
 
-            //  Stocker l'email temporairement et rediriger vers `/verify-email`
-            localStorage.setItem("emailToVerify", data.email);
-            router.push("/email-verified");
+            // Rediriger vers la page de vérification de l email
+            router.push("/email-verified")
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)
