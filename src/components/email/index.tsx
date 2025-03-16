@@ -8,7 +8,6 @@ interface labVerifyEmailProps {
 }
 
 
-
 export default function LabVerifyEmail({ verificationCode }: labVerifyEmailProps) {
 
 
