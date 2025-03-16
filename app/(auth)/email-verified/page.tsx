@@ -3,12 +3,14 @@
 import { z } from "zod"
 import { toast } from "sonner"
 import { useForm } from "react-hook-form"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { authClient } from "@/src/lib/auth-client"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/src/components/ui/form"
+
 
 
 const FormSchema = z.object({
@@ -22,6 +24,7 @@ export default function EmailVerified() {
      * ! STATE (état, données) de l'application
      */
     const router = useRouter()
+    const [resendCooldown, setResendCooldown] = useState(30)
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -33,6 +36,15 @@ export default function EmailVerified() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
+    useEffect(() => {
+        let timer: NodeJS.Timeout
+        if (resendCooldown > 0) {
+            timer = setInterval(() => setResendCooldown((prev) => prev - 1), 1000)
+        }
+        return () => clearInterval(timer)
+    }, [resendCooldown])
+
+
     const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
         const email = localStorage.getItem("emailToVerify")
 
@@ -61,6 +73,24 @@ export default function EmailVerified() {
         } catch (error) {
             console.error("Erreur lors de la vérification de l'adresse email :", error)
         }
+    }
+
+    const handleResendOtp = async () => {
+        if (resendCooldown > 0) return
+
+        const email = localStorage.getItem("emailToVerify")
+        if (!email) {
+            toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
+            return
+        }
+
+        await authClient.emailOtp.sendVerificationOtp({
+            email,
+            type: "email-verification",
+        })
+
+        toast.success("Un nouveau code a été envoyé.")
+        setResendCooldown(30)
     }
 
     /**
@@ -117,9 +147,10 @@ export default function EmailVerified() {
                             <button
                                 type="button"
                                 className="font-spaceGrotesk text-blue-600 hover:underline"
-                                onClick={() => toast.info("Un nouveau code a été envoyé.")}
+                                onClick={handleResendOtp}
+                                disabled={resendCooldown > 0}
                             >
-                                Renvoyer le code
+                                {resendCooldown > 0 ? `Réessayer dans ${resendCooldown}s` : "Renvoyer le code"}
                             </button>
                         </p>
                     </form>
