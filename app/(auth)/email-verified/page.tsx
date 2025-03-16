@@ -26,7 +26,13 @@ export default function EmailVerified() {
      * ! STATE (état, données) de l'application
      */
     const router = useRouter()
-    const [timeLeft, setTimeLeft] = useState(OTP_EXPIRATION_TIME)
+
+    const [timeLeft, setTimeLeft] = useState(() => {
+        const savedTime = parseInt(localStorage.getItem("otpExpiration") || "0", 10);
+        const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes
+        return savedTime > now ? savedTime - now : OTP_EXPIRATION_TIME;
+    })
+
     const [resendCooldown, setResendCooldown] = useState(() => {
         return parseInt(localStorage.getItem("resendCooldown") || "0", 10);
     })
@@ -45,10 +51,18 @@ export default function EmailVerified() {
     // Compter le temps restant pour l'expiration du code OTP
     useEffect(() => {
         if (timeLeft > 0) {
-            const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+            const timer = setInterval(() => {
+                setTimeLeft((prev) => {
+                    const newTime = prev - 1;
+                    localStorage.setItem("otpExpiration", (Math.floor(Date.now() / 1000) + newTime).toString()); // ✅ Sauvegarde dynamique
+                    return newTime;
+                });
+            }, 1000);
             return () => clearInterval(timer);
+        } else {
+            toast.error("Le code OTP a expiré. Veuillez demander un nouveau code.");
         }
-    }, [timeLeft])
+    }, [timeLeft]);
 
 
     // Compter le temps restant pour le renvoi du code OTP
@@ -85,15 +99,16 @@ export default function EmailVerified() {
                 otp: data.pin,
             })
             if (response.error) {
-                toast.error(response.error.message)
+                toast.error(response.error.message);
                 return
             }
 
             toast.success("Votre adresse email a été vérifiée avec succès.")
             router.push("/dashboard")
 
-            //  Supprimer l'email stocké après validation
+            // Supprimer les données stockées après validation
             localStorage.removeItem("emailToVerify");
+            localStorage.removeItem("otpExpiration");
 
         } catch (error) {
             console.error("Erreur lors de la vérification de l'adresse email :", error)
@@ -119,6 +134,11 @@ export default function EmailVerified() {
         setResendCooldown(RESEND_COOLDOWN_TIME)
         localStorage.setItem("resendCooldown", RESEND_COOLDOWN_TIME.toString()) //  Sauvegarder le cooldown
         setTimeLeft(OTP_EXPIRATION_TIME) //  Réinitialiser l'expiration de l'OTP
+
+        // Stocker l’heure d'expiration du nouvel OTP
+        const newExpiration = Math.floor(Date.now() / 1000) + OTP_EXPIRATION_TIME;
+        localStorage.setItem("otpExpiration", newExpiration.toString());
+        setTimeLeft(OTP_EXPIRATION_TIME);
     }
 
     //  Convertir le temps restant en minutes:secondes
