@@ -37,22 +37,19 @@ export const auth = betterAuth({
         openAPI(), // Expose an OpenAPI schema at /api/auth/reference
         emailOTP({
             async sendVerificationOTP({ email, otp, type }) {
-                let subject = "Votre code de vérification"
-                let text = `Votre code de vérification est : ${otp}. Ce code expirera dans 10 minutes.`;
+                let subject = "Code de vérification [Laboratoire]";
 
                 if (type === "sign-in") {
                     subject = "Connexion avec OTP";
-                    text = `Utilisez ce code pour vous connecter : ${otp}.`;
 
                 } else if (type === "forget-password") {
                     subject = "Réinitialisation de mot de passe";
-                    text = `Utilisez ce code pour réinitialiser votre mot de passe : ${otp}.`;
                 }
                 
                 await sendEmail({
                     to: email,
                     subject,
-                    text,
+                    otp
                 })
             },
             otpLength: 6, // Code OTP à 6 chiffres

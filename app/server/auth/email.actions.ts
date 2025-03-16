@@ -1,6 +1,10 @@
 "use server"
 
+import React from 'react'
 import nodemailer from 'nodemailer'
+import Email from '@/src/components/email'
+import { render } from '@react-email/components'
+
 
 const transporter = nodemailer.createTransport({
     host: 'sandbox.smtp.mailtrap.io',
@@ -11,13 +15,18 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-export async function sendEmail({ to, subject, text }: { to: string; subject: string; text: string }) {
+
+export async function sendEmail({ to, subject, otp }: { to: string; subject: string; otp: string }) {
     try {
+        // 📨 Générer le contenu HTML de l'email
+        const emailHtml = await render(React.createElement(Email, { verificationCode: otp }))
+
+
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
             to,
             subject,
-            text,
+            html: emailHtml,
         })
         return { success: true }
 
