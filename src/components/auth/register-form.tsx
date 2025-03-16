@@ -7,7 +7,6 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { Input } from "@/src/components/ui/input"
-import { authClient } from "@/src/lib/auth-client"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -49,12 +48,6 @@ export default function RegisterForm() {
                 toast.error(response.error)
                 return
             }
-
-            //  Envoyer un OTP pour vérifier l'email après inscription
-            await authClient.emailOtp.sendVerificationOtp({
-                email: data.email,
-                type: "email-verification",
-            })
 
             // Rediriger vers la page de vérification de l email
             router.push("/email-verified")

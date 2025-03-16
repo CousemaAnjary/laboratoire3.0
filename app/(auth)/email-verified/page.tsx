@@ -11,16 +11,14 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/src/components/ui/form"
+import { VerifyEmailSchema } from "@/src/lib/schemas/auth"
+import { verifyEmail } from "@/app/server/auth/auth.actions"
 
 
 const OTP_EXPIRATION_TIME = 600 // 10 minutes en secondes
 const RESEND_COOLDOWN_TIME = 30 // 30 secondes avant de renvoyer un OTP
 
-const FormSchema = z.object({
-    pin: z.string().min(6, {
-        message: "Le code de vérification doit contenir au moins 6 chiffres.",
-    }),
-})
+
 
 export default function EmailVerified() {
     /**
@@ -38,8 +36,8 @@ export default function EmailVerified() {
         return parseInt(localStorage.getItem("resendCooldown") || "0", 10);
     })
 
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
+    const form = useForm<z.infer<typeof VerifyEmailSchema>>({
+        resolver: zodResolver(VerifyEmailSchema),
         defaultValues: {
             pin: "",
         },
@@ -85,32 +83,19 @@ export default function EmailVerified() {
 
 
     // Vérifier le code OTP
-    const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
-        const cookieStore = await cookies()
-        const email = cookieStore.get("emailToVerify")?.value;
+    const handleVerifyOtp = async (data: z.infer<typeof VerifyEmailSchema>) => {
 
-
-        if (!email) {
-            toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
-            return
-        }
-
-        //  Vérifier le code OTP
         try {
-            const response = await authClient.emailOtp.verifyEmail({
-                email,
-                otp: data.pin,
-            })
-            if (response.error) {
-                toast.error(response.error.message);
+            const response = await verifyEmail(data)
+
+            if (!response.success) {
+                toast.error(response.error)
                 return
             }
 
-            toast.success("Votre adresse email a été vérifiée avec succès.")
+            toast.success(response.message)
             router.push("/dashboard")
 
-            // Supprimer les données stockées après validation
-            localStorage.removeItem("emailToVerify")
             localStorage.removeItem("otpExpiration")
 
         } catch (error) {
@@ -122,7 +107,8 @@ export default function EmailVerified() {
     const handleResendOtp = async () => {
         if (resendCooldown > 0) return
 
-        const email = localStorage.getItem("emailToVerify")
+        const cookieStore = await cookies()
+        const email = cookieStore.get("emailToVerify")?.value;
         if (!email) {
             toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
             return

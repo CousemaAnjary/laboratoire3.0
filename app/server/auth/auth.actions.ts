@@ -4,7 +4,7 @@ import { z } from "zod"
 import { auth } from "@/src/lib/auth"
 import { cookies } from "next/headers"
 import { prisma } from "@/src/lib/prisma"
-import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
+import { LoginSchema, RegisterSchema, VerifyEmailSchema } from "@/src/lib/schemas/auth"
 
 
 // Enregistrement d'un nouvel utilisateur
@@ -31,9 +31,10 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         const fullName = `${lastname} ${firstname}`.trim()
 
         // Création de l'utilisateur
-        await auth.api.signUpEmail({
-            body: { email, password, name: fullName },
-        })
+        await auth.api.signUpEmail({ body: { email, password, name: fullName } })
+
+        // Envoi du code OTP pour vérification de l'email
+        await auth.api.sendVerificationOTP({ body: { email, type: "email-verification" }, })
 
         //  Stocker l'email temporairement et rediriger vers `/verify-email`
         const cookieStore = await cookies()
@@ -85,29 +86,42 @@ export async function login(data: z.infer<typeof LoginSchema>) {
     }
 }
 
-// export async function sendResetPasswordEmail(data: z.infer<typeof ForgotPasswordSchema>) {
-//     try {
-//         // Validation des données reçues via votre schéma (Zod)
-//         const validated = ForgotPasswordSchema.safeParse(data)
 
-//         if (!validated.success) {
-//             return { success: false, error: "Données invalides", details: validated.error.format() }
-//         }
+// Vérification de l'email
+export async function verifyEmail(data: z.infer<typeof VerifyEmailSchema>) {
+    try {
+        // Validation des données reçues via votre schéma (Zod)
+        const validated = VerifyEmailSchema.safeParse(data);
 
-//         // Extraire les données validées
-//         const { email } = validated.data
+        if (!validated.success) {
+            return { success: false, error: "Données invalides", details: validated.error.format() }
+        }
 
-//         // Envoi de l'email de réinitialisation
-//         await auth.api.forgetPassword({ body: { email, redirectTo: "/reset-password" } })
+        // Récupérer l'email stocké temporairement
+        const cookieStore = await cookies()
+        const email = cookieStore.get("emailToVerify")?.value
+
+        if (!email) {
+            return { success: false, error: "Impossible de récupérer votre adresse e-mail." }
+        }
+
+        // extraire le code OTP de la requête
+        const { pin } = validated.data
+
+        // Vérifier l'email avec Better Auth
+        await auth.api.verifyEmailOTP({ body: { email, otp: pin } })
+
+        // Supprimer les données stockées après validation
+        cookieStore.delete("emailToVerify")
+
+        return { success: true, message: "Votre adresse email a été vérifiée avec succès." }
+
+    } catch (error) {
+        console.error("Erreur lors de la vérification de l'email :", error);
+        return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
+    }
+}
 
 
-//         return { success: true, message: "Email de réinitialisation envoyé" };
 
-
-//     } catch (error) {
-//         console.error("Erreur lors de l'envoi de l'email de réinitialisation :", error);
-//         return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
-//     }
-
-// }
 
