@@ -20,7 +20,7 @@ export default function LabVerifyEmail({ verificationCode }: labVerifyEmailProps
                 <Container style={container}>
                     <Section style={coverSection}>
                         <Section style={imageSection}>
-                            <CodeXml width={75} height={45} />
+                            <CodeXml width={75} height={45} color='#ffffff' />
                         </Section>
                         <Section style={upperSection}>
                             <Heading style={h1}>Vérifiez votre adresse e-mail</Heading>
@@ -108,6 +108,7 @@ const codeText = {
     ...text,
     fontWeight: 'bold',
     fontSize: '36px',
+    color: '#0620db',
     margin: '10px 0',
     textAlign: 'center' as const,
 };
