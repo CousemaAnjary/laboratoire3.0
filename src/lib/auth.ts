@@ -20,14 +20,6 @@ export const auth = betterAuth({
     emailVerification: {
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
-        // sendVerificationEmail: async ({ user, token }) => {
-        //     const verificationUrl = `${process.env.BETTER_AUTH_URL}/api/auth/verify-email?token=${token}&callbackURL=${process.env.EMAIL_VERIFICATION_CALLBACK_URL}`
-        //     await sendEmail({
-        //         to: user.email,
-        //         subject: "Vérification de l'adresse email",
-        //         text: `Cliquez sur le lien suivant pour vérifier votre adresse email: ${verificationUrl}`,
-        //     })
-        // }
     },
 
     socialProviders: {
@@ -44,11 +36,23 @@ export const auth = betterAuth({
     plugins: [
         openAPI(), // Expose an OpenAPI schema at /api/auth/reference
         emailOTP({
-            async sendVerificationOTP({ email, otp }) {
+            async sendVerificationOTP({ email, otp, type }) {
+                let subject = "Votre code de vérification"
+                let text = `Votre code de vérification est : ${otp}. Ce code expirera dans 10 minutes.`;
+
+                if (type === "sign-in") {
+                    subject = "Connexion avec OTP";
+                    text = `Utilisez ce code pour vous connecter : ${otp}.`;
+
+                } else if (type === "forget-password") {
+                    subject = "Réinitialisation de mot de passe";
+                    text = `Utilisez ce code pour réinitialiser votre mot de passe : ${otp}.`;
+                }
+                
                 await sendEmail({
                     to: email,
-                    subject: "Vérification de l'adresse email",
-                    text: `Votre code de vérification à 6 chiffres est: ${otp}`,
+                    subject,
+                    text,
                 })
             },
             otpLength: 6, // Code OTP à 6 chiffres

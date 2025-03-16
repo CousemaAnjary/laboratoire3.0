@@ -3,12 +3,12 @@
 import { z } from "zod"
 import { toast } from "sonner"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
+import { authClient } from "@/src/lib/auth-client"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/src/components/ui/form"
-import { authClient } from "@/src/lib/auth-client"
-import { useRouter } from "next/navigation"
 
 
 const FormSchema = z.object({

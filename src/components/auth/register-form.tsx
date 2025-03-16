@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
 import { register } from "@/app/server/auth/auth.actions"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
+import { authClient } from "@/src/lib/auth-client"
 
 
 
@@ -48,6 +49,12 @@ export default function RegisterForm() {
                 toast.error(response.error)
                 return
             }
+
+            //  Envoyer un OTP pour vérifier l'email après inscription
+            await authClient.emailOtp.sendVerificationOtp({
+                email: data.email,
+                type: "email-verification",
+            });
 
             //  Stocker l'email temporairement et rediriger vers `/verify-email`
             localStorage.setItem("emailToVerify", data.email);
