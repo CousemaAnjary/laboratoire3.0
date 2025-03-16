@@ -6,7 +6,6 @@ import Social from "./social"
 import { toast } from "sonner"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { Checkbox } from "../ui/checkbox"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
@@ -136,7 +135,7 @@ export default function LoginForm() {
                                 </Button>
                             </div>
                         </div>
-                        <div className="grid gap-2">
+                        {/* <div className="grid gap-2">
                             <FormField
                                 control={form.control}
                                 name="rememberMe"
@@ -157,7 +156,7 @@ export default function LoginForm() {
                                     </FormItem>
                                 )}
                             />
-                        </div>
+                        </div> */}
 
                         <div className="grid">
                             <Button type="submit" className="w-full bg-blue-900 font-inter hover:bg-blue-950 dark:bg-white" disabled={loading}>
