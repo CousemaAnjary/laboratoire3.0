@@ -3,11 +3,11 @@
 import nodemailer from 'nodemailer'
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email', 
+    host: 'sandbox.smtp.mailtrap.io',
     port: 587,
     auth: {
-        user: 'harmon.lakin@ethereal.email',
-        pass: 'yajn1XM2SJgaHM8USb'
+        user: '0d266b25542332',
+        pass: '0667ba346bf7d4'
     }
 })
 
@@ -15,7 +15,7 @@ export async function sendEmail({ to, subject, text }: { to: string; subject: st
     try {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
-            to, 
+            to,
             subject,
             text,
         })
