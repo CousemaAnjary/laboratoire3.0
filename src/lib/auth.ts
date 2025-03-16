@@ -53,7 +53,7 @@ export const auth = betterAuth({
                 })
             },
             otpLength: 6, // Code OTP à 6 chiffres
-            expiresIn : 600, // Code OTP expirant après 10 minutes
+            expiresIn: 5 * 60, // Code OTP expirant après 5 minutes
             sendVerificationOnSignUp: true, // Envoyer automatiquement un OTP après inscription
         }),
         nextCookies(),
