@@ -35,7 +35,7 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
 
 
         // Retourner l'utilisateur créé avec un message de succès
-        return { success: true, message: "Inscription réussie" }
+        return { success: true, message: "Inscription réussie. Vérifiez votre email." }
 
     } catch (error) {
         console.error("Erreur lors de l'inscription :", error)

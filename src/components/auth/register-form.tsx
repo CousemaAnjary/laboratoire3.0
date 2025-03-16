@@ -4,21 +4,21 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-// import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Input } from "@/src/components/ui/input"
 import { Eye, EyeOff, Loader } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterSchema } from "@/src/lib/schemas/auth"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 import { register } from "@/app/server/auth/auth.actions"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 
 
 export default function RegisterForm() {
     /**
      * ! STATE (état, données) de l'application
      */
-    // const router = useRouter()
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -45,14 +45,9 @@ export default function RegisterForm() {
 
             if (!response.success) {
                 toast.error(response.error)
-
-            } else {
-                //  Enregistrement du message de succès dans le stockage local
-                if (response.message) {
-                    localStorage.setItem("success", response.message)
-                }
-                // router.push("/login")
+                return
             }
+            router.push("/email-verified")
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)

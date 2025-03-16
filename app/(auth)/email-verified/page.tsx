@@ -1,8 +1,8 @@
 "use client"
 
+import { toast } from "sonner"
 import { Button } from "@/src/components/ui/button"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
-import { toast } from "sonner"
 
 
 export default function EmailVerified() {
