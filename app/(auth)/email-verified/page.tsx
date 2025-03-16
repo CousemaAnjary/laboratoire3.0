@@ -13,6 +13,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } 
 
 
 const OTP_EXPIRATION_TIME = 600 // 10 minutes en secondes
+const RESEND_COOLDOWN_TIME = 30; // 30 secondes avant de renvoyer un OTP
 
 const FormSchema = z.object({
     pin: z.string().min(6, {
@@ -25,8 +26,10 @@ export default function EmailVerified() {
      * ! STATE (état, données) de l'application
      */
     const router = useRouter()
-    const [resendCooldown, setResendCooldown] = useState(30)
     const [timeLeft, setTimeLeft] = useState(OTP_EXPIRATION_TIME)
+    const [resendCooldown, setResendCooldown] = useState(() => {
+        return parseInt(localStorage.getItem("resendCooldown") || "0", 10);
+    })
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -50,11 +53,19 @@ export default function EmailVerified() {
 
     // Compter le temps restant pour le renvoi du code OTP
     useEffect(() => {
-        let timer: NodeJS.Timeout
         if (resendCooldown > 0) {
-            timer = setInterval(() => setResendCooldown((prev) => prev - 1), 1000)
+            localStorage.setItem("resendCooldown", resendCooldown.toString()) //  Sauvegarder la valeur
+            const timer = setInterval(() => {
+                setResendCooldown((prev) => {
+                    if (prev <= 1) {
+                        localStorage.removeItem("resendCooldown") //  Supprimer une fois terminé
+                        return 0;
+                    }
+                    return prev - 1
+                })
+            }, 1000)
+            return () => clearInterval(timer)
         }
-        return () => clearInterval(timer)
     }, [resendCooldown])
 
 
@@ -105,8 +116,9 @@ export default function EmailVerified() {
         })
 
         toast.success("Un nouveau code a été envoyé.")
-        setResendCooldown(30)
-        setTimeLeft(OTP_EXPIRATION_TIME)
+        setResendCooldown(RESEND_COOLDOWN_TIME)
+        localStorage.setItem("resendCooldown", RESEND_COOLDOWN_TIME.toString()) //  Sauvegarder le cooldown
+        setTimeLeft(OTP_EXPIRATION_TIME) //  Réinitialiser l'expiration de l'OTP
     }
 
     //  Convertir le temps restant en minutes:secondes
