@@ -50,6 +50,7 @@ export default function RegisterForm() {
             }
 
             // Rediriger vers la page de vérification de l email
+            toast.success(response.message)
             router.push("/email-verified")
 
         } catch (error) {
