@@ -18,18 +18,18 @@ export const auth = betterAuth({
         requireEmailVerification: true,
     },
 
-    emailVerification: {
-        sendOnSignUp: true,
-        autoSignInAfterVerification: true,
-        // sendVerificationEmail: async ({ user, token }) => {
-        //     const verificationUrl = `${process.env.BETTER_AUTH_URL}/api/auth/verify-email?token=${token}&callbackURL=${process.env.EMAIL_VERIFICATION_CALLBACK_URL}`
-        //     await sendEmail({
-        //         to: user.email,
-        //         subject: "Vérification de l'adresse email",
-        //         text: `Cliquez sur le lien suivant pour vérifier votre adresse email: ${verificationUrl}`,
-        //     })
-        // }
-    },
+    // emailVerification: {
+    //     sendOnSignUp: true,
+    //     autoSignInAfterVerification: true,
+    //     sendVerificationEmail: async ({ user, token }) => {
+    //         const verificationUrl = `${process.env.BETTER_AUTH_URL}/api/auth/verify-email?token=${token}&callbackURL=${process.env.EMAIL_VERIFICATION_CALLBACK_URL}`
+    //         await sendEmail({
+    //             to: user.email,
+    //             subject: "Vérification de l'adresse email",
+    //             text: `Cliquez sur le lien suivant pour vérifier votre adresse email: ${verificationUrl}`,
+    //         })
+    //     }
+    // },
 
     socialProviders: {
         github: {
@@ -53,7 +53,7 @@ export const auth = betterAuth({
                 })
             },
             otpLength: 6, // Code OTP à 6 chiffres
-            expiresIn: 60 * 5, // Code OTP expirant après 5 minutes
+            expiresIn : 600, // Code OTP expirant après 10 minutes
             sendVerificationOnSignUp: true, // Envoyer automatiquement un OTP après inscription
         }),
         nextCookies(),

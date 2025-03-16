@@ -7,6 +7,8 @@ import { Button } from "@/src/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/components/ui/input-otp"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/src/components/ui/form"
+import { authClient } from "@/src/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 
 const FormSchema = z.object({
@@ -19,6 +21,8 @@ export default function EmailVerified() {
     /**
      * ! STATE (état, données) de l'application
      */
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -30,7 +34,25 @@ export default function EmailVerified() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
-        console.log(data)
+
+        // ✅ Vérifier le code OTP
+        try {
+            const response = await authClient.emailOtp.verifyEmail({
+                email: "user-email@email.com",
+                otp: data.pin,
+
+            })
+            if (response.error) {
+                toast.error(response.error.message)
+                return
+            }
+
+            toast.success("Votre adresse email a été vérifiée avec succès.")
+            router.push("/dashboard")
+
+        } catch (error) {
+            console.error("Erreur lors de la vérification de l'adresse email :", error)
+        }
     }
 
     /**
