@@ -34,11 +34,17 @@ export default function EmailVerified() {
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
     const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
+        const email = localStorage.getItem("emailToVerify")
 
-        // ✅ Vérifier le code OTP
+        if (!email) {
+            toast.error("Erreur : Impossible de récupérer votre adresse e-mail.");
+            return
+        }
+
+        //  Vérifier le code OTP
         try {
             const response = await authClient.emailOtp.verifyEmail({
-                email: "user-email@email.com",
+                email,
                 otp: data.pin,
             })
             if (response.error) {
@@ -48,6 +54,9 @@ export default function EmailVerified() {
 
             toast.success("Votre adresse email a été vérifiée avec succès.")
             router.push("/dashboard")
+
+            //  Supprimer l'email stocké après validation
+            localStorage.removeItem("emailToVerify");
 
         } catch (error) {
             console.error("Erreur lors de la vérification de l'adresse email :", error)

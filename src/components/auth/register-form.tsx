@@ -14,6 +14,7 @@ import { register } from "@/app/server/auth/auth.actions"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form"
 
 
+
 export default function RegisterForm() {
     /**
      * ! STATE (état, données) de l'application
@@ -47,7 +48,10 @@ export default function RegisterForm() {
                 toast.error(response.error)
                 return
             }
-            router.push("/email-verified")
+
+            //  Stocker l'email temporairement et rediriger vers `/verify-email`
+            localStorage.setItem("emailToVerify", data.email);
+            router.push("/email-verified");
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)

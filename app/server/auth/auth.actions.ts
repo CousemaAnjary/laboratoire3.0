@@ -5,6 +5,7 @@ import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
 import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
+
 // Enregistrement d'un nouvel utilisateur
 export async function register(data: z.infer<typeof RegisterSchema>) {
     try {
@@ -32,7 +33,6 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         await auth.api.signUpEmail({
             body: { email, password, name: fullName },
         })
-
 
         // Retourner l'utilisateur créé avec un message de succès
         return { success: true, message: "Inscription réussie. Vérifiez votre email." }
