@@ -3,7 +3,7 @@
 import { z } from "zod"
 import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
-import { ForgotPasswordSchema, LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
+import { LoginSchema, RegisterSchema } from "@/src/lib/schemas/auth"
 
 // Enregistrement d'un nouvel utilisateur
 export async function register(data: z.infer<typeof RegisterSchema>) {
@@ -80,29 +80,29 @@ export async function login(data: z.infer<typeof LoginSchema>) {
     }
 }
 
-export async function sendResetPasswordEmail(data: z.infer<typeof ForgotPasswordSchema>) {
-    try {
-        // Validation des données reçues via votre schéma (Zod)
-        const validated = ForgotPasswordSchema.safeParse(data)
+// export async function sendResetPasswordEmail(data: z.infer<typeof ForgotPasswordSchema>) {
+//     try {
+//         // Validation des données reçues via votre schéma (Zod)
+//         const validated = ForgotPasswordSchema.safeParse(data)
 
-        if (!validated.success) {
-            return { success: false, error: "Données invalides", details: validated.error.format() }
-        }
+//         if (!validated.success) {
+//             return { success: false, error: "Données invalides", details: validated.error.format() }
+//         }
 
-        // Extraire les données validées
-        const { email } = validated.data
+//         // Extraire les données validées
+//         const { email } = validated.data
 
-        // Envoi de l'email de réinitialisation
-        await auth.api.forgetPassword({ body: { email, redirectTo: "/reset-password" } })
-
-
-        return { success: true, message: "Email de réinitialisation envoyé" };
+//         // Envoi de l'email de réinitialisation
+//         await auth.api.forgetPassword({ body: { email, redirectTo: "/reset-password" } })
 
 
-    } catch (error) {
-        console.error("Erreur lors de l'envoi de l'email de réinitialisation :", error);
-        return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
-    }
+//         return { success: true, message: "Email de réinitialisation envoyé" };
 
-}
+
+//     } catch (error) {
+//         console.error("Erreur lors de l'envoi de l'email de réinitialisation :", error);
+//         return { success: false, error: "Une erreur inattendue est survenue. Veuillez réessayer plus tard." };
+//     }
+
+// }
 

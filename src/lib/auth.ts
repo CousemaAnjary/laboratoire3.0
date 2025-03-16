@@ -1,10 +1,9 @@
 import { prisma } from "./prisma"
 import { betterAuth } from "better-auth"
-import { emailOTP, openAPI } from "better-auth/plugins"
 import { nextCookies } from "better-auth/next-js"
+import { emailOTP, openAPI } from "better-auth/plugins"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { sendEmail } from "@/app/server/auth/email.actions"
-
 
 
 export const auth = betterAuth({

@@ -40,7 +40,6 @@ export default function EmailVerified() {
             const response = await authClient.emailOtp.verifyEmail({
                 email: "user-email@email.com",
                 otp: data.pin,
-
             })
             if (response.error) {
                 toast.error(response.error.message)
