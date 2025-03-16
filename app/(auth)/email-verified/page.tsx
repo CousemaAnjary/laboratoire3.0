@@ -12,6 +12,7 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/src/
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/src/components/ui/form"
 
 
+const OTP_EXPIRATION_TIME = 600 // 10 minutes en secondes
 
 const FormSchema = z.object({
     pin: z.string().min(6, {
@@ -25,6 +26,7 @@ export default function EmailVerified() {
      */
     const router = useRouter()
     const [resendCooldown, setResendCooldown] = useState(30)
+    const [timeLeft, setTimeLeft] = useState(OTP_EXPIRATION_TIME)
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -36,6 +38,17 @@ export default function EmailVerified() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
+
+    // Compter le temps restant pour l'expiration du code OTP
+    useEffect(() => {
+        if (timeLeft > 0) {
+            const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+            return () => clearInterval(timer);
+        }
+    }, [timeLeft])
+
+
+    // Compter le temps restant pour le renvoi du code OTP
     useEffect(() => {
         let timer: NodeJS.Timeout
         if (resendCooldown > 0) {
@@ -45,6 +58,7 @@ export default function EmailVerified() {
     }, [resendCooldown])
 
 
+    // Vérifier le code OTP
     const handleVerifyOtp = async (data: z.infer<typeof FormSchema>) => {
         const email = localStorage.getItem("emailToVerify")
 
@@ -75,6 +89,7 @@ export default function EmailVerified() {
         }
     }
 
+    // Renvoyer le code OTP
     const handleResendOtp = async () => {
         if (resendCooldown > 0) return
 
@@ -91,7 +106,12 @@ export default function EmailVerified() {
 
         toast.success("Un nouveau code a été envoyé.")
         setResendCooldown(30)
+        setTimeLeft(OTP_EXPIRATION_TIME)
     }
+
+    //  Convertir le temps restant en minutes:secondes
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
 
     /**
      * ! AFFICHAGE (render) de l'application
@@ -129,7 +149,7 @@ export default function EmailVerified() {
                                             </InputOTP>
                                         </FormControl>
                                         <FormDescription>
-                                            Votre code de vérification à 6 chiffres <span> expirera dans 2000 secondes.</span>
+                                            Votre code de vérification à 6 chiffres <span> expirera dans {minutes} min {seconds} sec</span>
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
