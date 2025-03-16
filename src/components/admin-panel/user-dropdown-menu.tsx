@@ -37,9 +37,9 @@ export default function UserDropdownMenu() {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="relative size-8 rounded-full"
+                    className="relative size-8 rounded"
                 >
-                    <Avatar className="size-8">
+                    <Avatar className="size-8 rounded">
                         <AvatarImage
                             src={session?.user?.image ?? undefined}
                             alt="@shadcn" />
