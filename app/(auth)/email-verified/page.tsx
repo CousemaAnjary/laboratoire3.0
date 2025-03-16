@@ -52,9 +52,9 @@ export default function EmailVerified() {
                                 control={form.control}
                                 name="pin"
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col items-center">
                                         <FormControl>
-                                            <InputOTP maxLength={6} {...field} autoFocus>
+                                            <InputOTP maxLength={6} {...field} autoFocus className="flex justify-center gap-2">
                                                 <InputOTPGroup>
                                                     <InputOTPSlot index={0} className="bg-white font-inter" />
                                                     <InputOTPSlot index={1} className="bg-white font-inter" />
@@ -69,7 +69,7 @@ export default function EmailVerified() {
                                             </InputOTP>
                                         </FormControl>
                                         <FormDescription>
-                                            Votre code de vérification à 6 chiffres <span> expirera dans 20 secondes.</span>
+                                            Votre code de vérification à 6 chiffres <span> expirera dans 2000 secondes.</span>
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
