@@ -31,16 +31,17 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
             return { success: false, error: "Un compte existe déjà avec cette adresse e-mail" }
         }
 
-        await Promise.all([
-            // Création de l'utilisateur
-            auth.api.signUpEmail({ body: { email, password, name: fullName } }),
+        // Création de l'utilisateur
+        await auth.api.signUpEmail({ body: { email, password, name: fullName } })
 
-            // Envoi du code OTP pour vérification de l'email
-            auth.api.sendVerificationOTP({ body: { email, type: "email-verification" }, }),
+        // Envoyer l'OTP **en tâche de fond** pour ne pas bloquer l'inscription
+        setTimeout(async () => {
+            await auth.api.sendVerificationOTP({ body: { email, type: "email-verification" } })
+        }, 0)
 
-            //  Stocker l'email temporairement et rediriger vers `/verify-email`
-            cookies().then((cookieStore) => cookieStore.set("emailToVerify", email, { httpOnly: true, secure: true }))
-        ])
+        //  Stocker l'email temporairement et rediriger vers `/verify-email`
+        const cookieStore = await cookies()
+        cookieStore.set("emailToVerify", email, { httpOnly: true, secure: true });
 
         // Retourner l'utilisateur créé avec un message de succès
         return { success: true, message: "Inscription réussie. Vérifiez votre email." }
