@@ -22,9 +22,8 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         const fullName = `${lastname} ${firstname}`.trim()
 
         // Vérifier si l'email existe déjà
-        const existingUser = await prisma.user.findUnique({
-            where: { email },
-        })
+        const existingUser = await prisma.user.findUnique({ where: { email } })
+
 
         if (existingUser) {
             return { success: false, error: "Un compte existe déjà avec cette adresse e-mail" }
@@ -89,7 +88,7 @@ export async function login(data: z.infer<typeof LoginSchema>) {
 }
 
 
-// Vérification de l'email
+// Vérification de l'email avec OTP
 export async function verifyEmail(data: z.infer<typeof VerifyEmailSchema>) {
     try {
         // Validation des données reçues via votre schéma (Zod)
