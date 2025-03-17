@@ -24,7 +24,6 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
         // Vérifier si l'email existe déjà
         const existingUser = await prisma.user.findUnique({
             where: { email },
-            select: { id: true } // Ne récupérer que l'ID pour optimiser la requête
         })
 
         if (existingUser) {
