@@ -51,7 +51,7 @@ export default function RegisterForm() {
 
             // Rediriger vers la page de vérification de l email
             toast.success(response.message)
-            router.push("/email-verified")
+            router.replace("/email-verified") // `replace()` pour éviter que l'utilisateur revienne à la page précédente
 
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error)
