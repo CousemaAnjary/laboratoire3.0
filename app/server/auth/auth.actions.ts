@@ -19,26 +19,28 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
 
         // Extraire les données validées
         const { email, password, lastname, firstname } = validated.data
+        const fullName = `${lastname} ${firstname}`.trim()
 
         // Vérifier si l'email existe déjà
-        const existingUser = await prisma.user.findUnique({ where: { email } })
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
+            select: { id: true } // Ne récupérer que l'ID pour optimiser la requête
+        })
 
         if (existingUser) {
             return { success: false, error: "Un compte existe déjà avec cette adresse e-mail" }
         }
 
-        // Concatenation des champs firstname et lastname pour le champ name
-        const fullName = `${lastname} ${firstname}`.trim()
+        await Promise.all([
+            // Création de l'utilisateur
+            auth.api.signUpEmail({ body: { email, password, name: fullName } }),
 
-        // Création de l'utilisateur
-        await auth.api.signUpEmail({ body: { email, password, name: fullName } })
+            // Envoi du code OTP pour vérification de l'email
+            auth.api.sendVerificationOTP({ body: { email, type: "email-verification" }, }),
 
-        // Envoi du code OTP pour vérification de l'email
-        await auth.api.sendVerificationOTP({ body: { email, type: "email-verification" }, })
-
-        //  Stocker l'email temporairement et rediriger vers `/verify-email`
-        const cookieStore = await cookies()
-        cookieStore.set("emailToVerify", email)
+            //  Stocker l'email temporairement et rediriger vers `/verify-email`
+            cookies().then((cookieStore) => cookieStore.set("emailToVerify", email, { httpOnly: true, secure: true }))
+        ])
 
         // Retourner l'utilisateur créé avec un message de succès
         return { success: true, message: "Inscription réussie. Vérifiez votre email." }
